@@ -1,0 +1,77 @@
+import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const faqs = [
+  {
+    question: "Apa saja layanan yang Drabs tawarkan dalam pengembangan web?",
+    answer:
+      "Kami menawarkan layanan pengembangan web yang mencakup desain web responsif, pengembangan frontend dan backend, integrasi API, e-commerce, serta pemeliharaan dan dukungan berkelanjutan. Kami menggunakan teknologi terkini seperti React.js dan Node.js untuk memastikan website Anda cepat, aman, dan skalabel.",
+  },
+  {
+    question: "Apakah Drabs menyediakan layanan pengembangan aplikasi mobile?",
+    answer:
+      "Ya, kami menyediakan layanan pengembangan aplikasi mobile untuk platform iOS dan Android. Tim kami berpengalaman dalam menggunakan teknologi cross-platform seperti React Native untuk memastikan aplikasi mobile Anda dapat diakses oleh pengguna di berbagai perangkat.",
+  },
+  {
+    question: "Apa saja yang termasuk dalam layanan konsultasi IT",
+    answer:
+      "Layanan konsultasi IT kami meliputi analisis kebutuhan bisnis, perencanaan strategi teknologi, audit keamanan sistem, optimasi performa aplikasi, migrasi cloud, dan implementasi sistem ERP. Kami bekerja sama dengan Anda untuk mengidentifikasi dan menerapkan solusi IT yang paling efektif dan efisien untuk bisnis Anda.",
+  },
+  {
+    question: "Berapa lama pengerjaan setiap sistem pada Drabs?",
+    answer:
+      "Waktu penyelesaian proyek bervariasi tergantung pada kompleksitas dan skala proyek tersebut. Untuk proyek sederhana, seperti website portofolio, biasanya memakan waktu sekitar 4-6 minggu. Proyek yang lebih kompleks, seperti aplikasi e-commerce atau sistem manajemen perusahaan, dapat memakan waktu beberapa bulan. Kami akan memberikan estimasi waktu yang lebih akurat setelah melakukan analisis kebutuhan proyek Anda.",
+  },
+  {
+    question: "Bagaimana proses pengembangan proyek di perusahaan Drabs?",
+    answer:
+      "Proses pengembangan kami mengikuti metodologi Agile yang terdiri dari beberapa tahap, yaitu perencanaan, desain, pengembangan, pengujian, dan peluncuran. Kami berkolaborasi erat dengan klien selama setiap tahap untuk memastikan proyek berjalan sesuai dengan visi dan kebutuhan Anda.",
+  },
+];
+
+const Faq: React.FC = () => {
+  return (
+    <section className="bg-[#F8F8F8] py-20">
+      <div className="container mx-auto space-y-10">
+        <div className="flex justify-center">
+          <img src="/question-img.png" alt="question-img" />
+        </div>
+        <div className="my-4 space-y-1">
+          <h1 className="text-[#0F2028] anton text-center text-5xl">
+            Frequently Asked
+          </h1>
+          <h1 className="text-[#0F2028] anton text-center text-5xl">
+            Questions
+          </h1>
+          <p className="text-[#0F2028] text-sm text-center w-1/2 mx-auto">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+            varius arcu urna, et hendrerit.
+          </p>
+        </div>
+        <Accordion type="single" collapsible className="w-full">
+          <div className="space-y-3">
+            {faqs.map((f, i) => (
+              <AccordionItem
+                value={String(i)}
+                className="border rounded-xl px-6 border-slate-500"
+                key={i}
+              >
+                <AccordionTrigger>{f.question}</AccordionTrigger>
+                <AccordionContent className="leading-relaxed">
+                  {f.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </div>
+        </Accordion>
+      </div>
+    </section>
+  );
+};
+
+export default Faq;
