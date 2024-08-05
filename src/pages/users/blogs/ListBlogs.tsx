@@ -36,6 +36,15 @@ const ListBlogs: React.FC = () => {
       setBlogsTrending(sortedBlogs);
     }
   }, [dataBlogs]);
+
+  const createSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "") // Menghapus karakter khusus
+      .replace(/\s+/g, "-") // Mengganti spasi dengan tanda hubung
+      .replace(/-+/g, "-"); // Mengganti beberapa tanda hubung dengan satu
+  };
+
   return (
     <div className="flex justify-between">
       <main className="w-8/12 space-y-6 mt-10">
@@ -63,7 +72,9 @@ const ListBlogs: React.FC = () => {
             : dataBlogs?.slice(0, 5).map((item) => (
                 <div key={item.id_article} className="space-y-6 mt-4">
                   <Link
-                    to={`/blogs/detail/${item.id_article}`}
+                    to={`/blogs/detail/${createSlug(item.title)}/${
+                      item.id_article
+                    }`}
                     className="space-y-1"
                   >
                     <div className="flex gap-2">

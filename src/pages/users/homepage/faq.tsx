@@ -39,15 +39,15 @@ const Faq: React.FC = () => {
     <section className="bg-[#F8F8F8] py-20">
       <div className="container mx-auto space-y-10">
         <div className="flex justify-center">
-          <img src="/question-img.png" alt="question-img" />
+          <img src="/question-img.png" alt="question-img" className="w-1/3" />
         </div>
         <div className="my-4 space-y-1">
-          <h1 className="text-[#0F2028] anton text-center text-5xl">
+          <h2 className="text-[#0F2028] anton text-center text-5xl">
             Frequently Asked
-          </h1>
-          <h1 className="text-[#0F2028] anton text-center text-5xl">
+          </h2>
+          <h2 className="text-[#0F2028] anton text-center text-5xl">
             Questions
-          </h1>
+          </h2>
           <p className="text-[#0F2028] text-sm text-center w-1/2 mx-auto">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
             varius arcu urna, et hendrerit.

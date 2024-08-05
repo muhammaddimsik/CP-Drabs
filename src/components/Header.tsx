@@ -31,7 +31,9 @@ const Header: React.FC = () => {
   return (
     <header className="w-full flex justify-between items-center py-10">
       <div className="w-3/12">
-        <p className="font-medium text-white">Drabsky</p>
+        <Link to="/">
+          <p className="font-medium text-white">Drabsky</p>
+        </Link>
       </div>
       <nav className="w-6/12">
         <ul className="flex justify-center gap-6">

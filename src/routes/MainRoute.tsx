@@ -25,7 +25,7 @@ const MainRoute: React.FC = () => {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/blogs" element={<Blogs />} />
-        <Route path="/blogs/detail/:id" element={<DetailBlogs />} />
+        <Route path="/blogs/detail/:slug/:id" element={<DetailBlogs />} />
         <Route path="/drabs/login" element={<Login />} />
         <Route path="administrator">
           <Route

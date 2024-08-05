@@ -1,4 +1,5 @@
 import HeaderLight from "@/components/HeaderLight";
+import Seo from "@/components/Seo";
 import { TArticles } from "@/lib/models";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -29,16 +30,28 @@ const DetailBlog: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full">
-      <div className="container mx-auto">
-        <HeaderLight />
-      </div>
-      <div className="container mx-auto">
-        <div className="">
-          <p>Next.js Pragmatis: Server Components & Client Components</p>
+    <>
+      {detailBlog && (
+        <Seo
+          title={detailBlog.title}
+          description={detailBlog.meta_description}
+          type="article"
+          name="Drabsky"
+          image={detailBlog.image}
+          url={`https://www.drabsky.com/blogs/detail/${params.slug}/${params.id}`}
+        />
+      )}
+      <div className="w-full">
+        <div className="container mx-auto">
+          <HeaderLight />
+        </div>
+        <div className="container mx-auto">
+          <div className="">
+            <p>Next.js Pragmatis: Server Components & Client Components</p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
