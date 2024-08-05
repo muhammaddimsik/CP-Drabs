@@ -9,6 +9,9 @@ export interface TArticles {
   meta_keyword: string;
   categori_id: number;
   view_count: number;
+  createdAt: string;
+  createdBy: string;
+  updateAt: string;
   categories: {
     id_categori: number;
     name_categori: string;

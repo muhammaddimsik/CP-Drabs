@@ -23,6 +23,7 @@ import { Loader } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/stores/AuthStore";
 
 const path = [
   {
@@ -54,12 +55,18 @@ const AddService: React.FC = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
+  const { accessToken } = useAuth();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
 
     try {
-      await axiosInstance.post("services", values);
+      await axiosInstance.post("services", values, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       toast({
         title: "Success",

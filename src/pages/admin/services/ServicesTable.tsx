@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, PencilLine } from "lucide-react";
+import { ArrowUpDown, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -41,6 +41,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { Link } from "react-router-dom";
 import { TServices } from "@/lib/models";
+import EditService from "./EditService";
 
 interface Props {
   data: TServices[];
@@ -79,7 +80,11 @@ export const columns = (refetch: () => void): ColumnDef<TServices>[] => [
   {
     accessorKey: "icon",
     header: "Icon",
-    cell: ({ row }) => <div>{row.getValue("icon")}</div>,
+    cell: ({ row }) => (
+      <div>
+        <div dangerouslySetInnerHTML={{ __html: row.getValue("icon") }} />
+      </div>
+    ),
   },
   {
     id: "actions",
@@ -124,11 +129,7 @@ export const columns = (refetch: () => void): ColumnDef<TServices>[] => [
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />
-          <Link to={`edit/${service.id_service}`}>
-            <Button size="sm">
-              <PencilLine className="w-4" />
-            </Button>
-          </Link>
+          <EditService services={service} getDataServices={refetch} />
         </div>
       );
     },
@@ -207,7 +208,7 @@ const ServicesTable: React.FC<Props> = ({ data, getServices }) => {
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Link to="/services/add-service">
+          <Link to="/administrator/services/add-service">
             <Button size="sm">+Add New</Button>
           </Link>
         </div>

@@ -30,10 +30,12 @@ import { useAuth } from "@/stores/AuthStore";
 import { Label } from "@/components/ui/label";
 import { Loader, Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AddCategory from "@/components/AddCategory";
 import { TCategories } from "@/lib/models";
-import Editor from "@/components/rich-text/editor";
+// import Editor from "@/components/rich-text/editor";
+
+import JoditEditor from "jodit-react";
 
 const path = [
   {
@@ -60,7 +62,7 @@ const AddArticle: React.FC = () => {
     defaultValues: {
       title: "",
       categori_id: "",
-      content: "Hello World",
+      content: "",
       meta_description: "",
       meta_keyword: "",
     },
@@ -85,7 +87,6 @@ const AddArticle: React.FC = () => {
       );
 
       return response.data.url;
-      console.log("berhasil");
     } catch (error) {
       console.log(error);
     }
@@ -116,7 +117,7 @@ const AddArticle: React.FC = () => {
 
       toast({
         title: "Success",
-        description: "Data wisata berhasil ditambahkan",
+        description: "Data article berhasil ditambahkan",
         variant: "success",
       });
 
@@ -125,7 +126,7 @@ const AddArticle: React.FC = () => {
       console.log(error);
       toast({
         title: "Error",
-        description: "Data wisata gagal ditambahkan, coba beberapa saat lagi.",
+        description: "Data article gagal ditambahkan, coba beberapa saat lagi.",
         variant: "destructive",
       });
     } finally {
@@ -174,6 +175,8 @@ const AddArticle: React.FC = () => {
     }
   };
 
+  const editor = useRef(null);
+
   return (
     <Layout path={path} title="Add Article">
       <Form {...form}>
@@ -188,6 +191,7 @@ const AddArticle: React.FC = () => {
                   onChange={handleFileChange}
                   accept="image/*"
                   ref={fileInputRef}
+                  className="mt-1"
                 />
                 {preveiw && (
                   <div className="mt-2">
@@ -265,62 +269,62 @@ const AddArticle: React.FC = () => {
                   </FormItem>
                 )}
               />
-              <div>
-                <div className="flex gap-2">
-                  <FormField
-                    control={form.control}
-                    name="meta_description"
-                    render={({ field }) => (
-                      <FormItem className="w-1/2">
-                        <FormLabel>Meta Descriptions</FormLabel>
-                        <FormControl>
-                          <Input placeholder="ex. 9123.123.12" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="meta_keyword"
-                    render={({ field }) => (
-                      <FormItem className="w-1/2">
-                        <FormLabel>Meta Keyword</FormLabel>
-                        <FormControl>
-                          <Input placeholder="ex. 12873.12981.12" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormDescription className="mt-1">
-                  Lihat cara mendapatkan titik{" "}
-                  <Link to="/latitude-longitude" className="hover:underline">
-                    Latitude & Longitude
-                  </Link>
-                </FormDescription>
-              </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-1/2 space-y-4">
               <FormField
                 control={form.control}
-                name="content"
+                name="meta_description"
                 render={({ field }) => (
-                  <FormItem className="">
-                    <FormLabel>Descriptions</FormLabel>
+                  <FormItem className="w-full">
+                    <FormLabel>Meta Descriptions</FormLabel>
                     <FormControl>
-                      <Editor
-                        content={field.value}
-                        onChange={field.onChange}
-                        placeholder="Write your post here..."
-                      />
+                      <Input placeholder="ex. 9123.123.12" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="meta_keyword"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Meta Keyword</FormLabel>
+                    <FormControl>
+                      <Input placeholder="ex. 12873.12981.12" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
+          </div>
+          <div className="w-full p-4 rounded-xl bg-white">
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                <FormItem className="">
+                  <FormLabel>Descriptions</FormLabel>
+                  <FormControl>
+                    {/* <Editor
+                        content={field.value}
+                        onChange={field.onChange}
+                        placeholder="Write your post here..."
+                      /> */}
+                    <JoditEditor
+                      ref={editor}
+                      value={field.value}
+                      // config={config}
+                      // tabIndex={1} // tabIndex of textarea
+                      // onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
           <div className="bg-white w-full py-2 px-4 flex justify-end">
             <Button size="sm" type="submit">

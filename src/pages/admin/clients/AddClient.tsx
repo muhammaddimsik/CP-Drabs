@@ -91,9 +91,12 @@ const AddClient: React.FC = () => {
       image: imageUrl,
     };
 
-    console.log(body);
     try {
-      await axiosInstance.post("client", body);
+      await axiosInstance.post("client", body, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       toast({
         title: "Success",
@@ -101,7 +104,7 @@ const AddClient: React.FC = () => {
         variant: "success",
       });
 
-      navigate("administrator/clients");
+      navigate("/administrator/clients");
     } catch (error) {
       console.log(error);
       toast({

@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,35 +24,55 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { axiosInstance } from "@/lib/axios";
-import { Loader, Pencil } from "lucide-react";
+import { Loader, Pencil, Trash2 } from "lucide-react";
 
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
-import { TServices } from "@/lib/models";
+import { TClients } from "@/lib/models";
+import { Label } from "@/components/ui/label";
+import { useAuth } from "@/stores/AuthStore";
 
 const formSchema = z.object({
   title: z.string().min(2).max(50, "Maksimal panjang nama adalah 50"),
-  content: z.string().min(10, "Deskripsi minimal terdiri dari 10 karakter"),
-  icon: z.string(),
+  description: z.string().min(10, "Deskripsi minimal terdiri dari 10 karakter"),
 });
 
 interface Props {
-  services: TServices;
-  getDataServices: () => void;
+  client: TClients;
+  getDataClient: () => void;
 }
 
-const EditService: React.FC<Props> = ({
-  services,
-  getDataServices: refetch,
-}) => {
+const EditClient: React.FC<Props> = ({ client, getDataClient: refetch }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: services.title,
-      content: services.content,
-      icon: services.icon,
+      title: client.title,
+      description: client.description,
     },
   });
+
+  const { accessToken } = useAuth();
+
+  const getLinkImg = async (img: File) => {
+    try {
+      const response = await axiosInstance.post(
+        "files",
+        {
+          file: img,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      return response.data.url;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -62,8 +81,21 @@ const EditService: React.FC<Props> = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
 
+    let imageUrl = "";
+
+    if (imgToUpload) {
+      imageUrl = await getLinkImg(imgToUpload);
+    } else if (preveiw) {
+      imageUrl = preveiw;
+    }
+
+    const body = {
+      ...values,
+      image: imageUrl,
+    };
+
     try {
-      await axiosInstance.put(`services/${services.id_service}`, values);
+      await axiosInstance.put(`client/${client.id_client}`, body);
 
       toast({
         title: "Success",
@@ -85,6 +117,29 @@ const EditService: React.FC<Props> = ({
     }
   };
 
+  const [imgToUpload, setImgToUpload] = useState<File>();
+  const [preveiw, setPreview] = useState<string | null>(client.image);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setImgToUpload(file);
+    }
+    const file = e.target.files?.[0];
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setPreview(previewUrl);
+    }
+  };
+
+  const removeImg = () => {
+    setPreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Mengatur ulang nilai input file
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -94,7 +149,7 @@ const EditService: React.FC<Props> = ({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Service</DialogTitle>
+          <DialogTitle>Edit Client</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -104,11 +159,11 @@ const EditService: React.FC<Props> = ({
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nama Service</FormLabel>
+                    <FormLabel>Nama Client</FormLabel>
                     <FormControl>
                       <Input
                         className="text-sm"
-                        placeholder="ex. Web Development"
+                        placeholder="ex. PT IDMETAFORA"
                         {...field}
                       />
                     </FormControl>
@@ -118,7 +173,7 @@ const EditService: React.FC<Props> = ({
               />
               <FormField
                 control={form.control}
-                name="content"
+                name="description"
                 render={({ field }) => (
                   <FormItem className="">
                     <FormLabel>Deskripsi</FormLabel>
@@ -132,22 +187,39 @@ const EditService: React.FC<Props> = ({
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="icon"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Icon</FormLabel>
-                    <FormControl>
-                      <Input placeholder="ex. <svg></svg>" {...field} />
-                    </FormControl>
-                    <FormDescription className="mt-1">
-                      Icon harus berbentuk svg
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
+              <div>
+                <Label htmlFor="pict">Image</Label>
+                <Input
+                  id="pict"
+                  type="file"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  ref={fileInputRef}
+                />
+                {preveiw && (
+                  <div className="mt-2">
+                    <Label
+                      htmlFor="pict"
+                      className="border rounded-md flex justify-center py-2"
+                    >
+                      <img
+                        src={preveiw ? preveiw : ""}
+                        alt="prevew-client"
+                        className="max-h-40"
+                      />
+                    </Label>
+                    <div className="text-center py-2 border rounded-md mt-1">
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={removeImg}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
                 )}
-              />
+              </div>
             </div>
             <DialogFooter>
               <div className="bg-white w-full py-2 px-4 flex justify-end">
@@ -163,4 +235,4 @@ const EditService: React.FC<Props> = ({
   );
 };
 
-export default EditService;
+export default EditClient;

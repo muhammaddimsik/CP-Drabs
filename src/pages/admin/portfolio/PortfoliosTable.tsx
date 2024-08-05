@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, PencilLine } from "lucide-react";
+import { ArrowUpDown, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -41,6 +41,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { Link } from "react-router-dom";
 import { TPortfolio } from "@/lib/models";
+import EditPortfolio from "./EditPortfolio";
 
 interface Props {
   data: TPortfolio[];
@@ -138,11 +139,7 @@ export const columns = (refetch: () => void): ColumnDef<TPortfolio>[] => [
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />
-          <Link to={`edit/${portfolio.id_portofolio}`}>
-            <Button size="sm">
-              <PencilLine className="w-4" />
-            </Button>
-          </Link>
+          <EditPortfolio portfolio={portfolio} getDataPortfolio={refetch} />
         </div>
       );
     },

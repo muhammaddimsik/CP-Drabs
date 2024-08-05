@@ -30,13 +30,17 @@ import Logo from "/logo.png";
 const Sidebar: React.FC = () => {
   const location = useLocation();
 
-  const { setAccessToken } = useAuth();
+  const { setAccessToken, accessToken } = useAuth();
 
   const [isLoading, setIsLoading] = useState(false);
   const handleLogout = async () => {
     setIsLoading(true);
     try {
-      await axiosInstance.delete("logout");
+      await axiosInstance.delete("logout", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       // console.log(response);
     } catch (error) {
       console.log(error);
@@ -48,7 +52,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <section className="sticky z-10 top-0 left-0 text-slate-800 border border-white">
-      <Link to="/dashboard">
+      <Link to="/administrator/dashboard">
         <div className="flex flex-col items-center gap-2 mt-3 p-4">
           <img src={Logo} alt="logo" className="h-14" />
           <p className="font-medium text-[#00AEF0] hidden lg:inline">Drabsky</p>

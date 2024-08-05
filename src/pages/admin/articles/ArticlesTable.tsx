@@ -93,7 +93,12 @@ export const columns = (refetch: () => void): ColumnDef<TArticles>[] => [
   {
     accessorKey: "content",
     header: "Descriptions",
-    cell: ({ row }) => <div>{row.getValue("content")}</div>,
+    cell: ({ row }) => (
+      <div>
+        {" "}
+        <div dangerouslySetInnerHTML={{ __html: row.getValue("content") }} />
+      </div>
+    ),
   },
   {
     id: "categorie",

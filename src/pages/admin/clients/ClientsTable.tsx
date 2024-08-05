@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, PencilLine } from "lucide-react";
+import { ArrowUpDown, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -41,6 +41,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { Link } from "react-router-dom";
 import { TClients } from "@/lib/models";
+import EditClient from "./EditClient";
 
 interface Props {
   data: TClients[];
@@ -138,11 +139,7 @@ export const columns = (refetch: () => void): ColumnDef<TClients>[] => [
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />
-          <Link to={`edit/${client.id_client}`}>
-            <Button size="sm">
-              <PencilLine className="w-4" />
-            </Button>
-          </Link>
+          <EditClient client={client} getDataClient={refetch} />
         </div>
       );
     },

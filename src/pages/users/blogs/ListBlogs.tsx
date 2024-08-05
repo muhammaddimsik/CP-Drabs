@@ -75,15 +75,31 @@ const ListBlogs: React.FC = () => {
                     to={`/blogs/detail/${createSlug(item.title)}/${
                       item.id_article
                     }`}
-                    className="space-y-1"
+                    className="space-y-4"
                   >
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2">
+                        <div className="border p-1 rounded-full">
+                          <img
+                            src="/logo.png"
+                            alt="drabsky"
+                            width={25}
+                            height={25}
+                          />
+                        </div>
+                        <p className="text-sm">Drabs</p>
+                      </div>
+                      <p className="text-sm">{item.createdAt}</p>
+                    </div>
                     <div className="flex gap-2">
                       <div className="w-8/12">
                         <h2 className="text-xl font-semibold line-clamp-2 hover:underline">
                           {item.title}
                         </h2>
                         <p className="line-clamp-2 text-sm mt-1">
-                          {item.content}
+                          <div
+                            dangerouslySetInnerHTML={{ __html: item.content }}
+                          />
                         </p>
                       </div>
                       <div className="w-4/12 flex justify-end">
@@ -94,14 +110,10 @@ const ListBlogs: React.FC = () => {
                         />
                       </div>
                     </div>
-                    <div className="flex gap-4 items-center">
+                    <div className="flex items-center gap-4">
                       <p className="text-sm">
                         {item.categories?.name_categori}
                       </p>
-                      <div className="flex items-center gap-1">
-                        <EyeIcon className="w-5" />
-                        <p className="text-sm">{item.view_count}</p>
-                      </div>
                     </div>
                   </Link>
                   <hr />
@@ -135,7 +147,11 @@ const ListBlogs: React.FC = () => {
                       <p className="font-medium hover:underline line-clamp-2">
                         {item.title}
                       </p>
-                      <p className="text-sm line-clamp-2">{item.content}</p>
+                      <p className="text-sm line-clamp-2">
+                        <div
+                          dangerouslySetInnerHTML={{ __html: item.content }}
+                        />
+                      </p>
                     </Link>
                   </li>
                 ))}

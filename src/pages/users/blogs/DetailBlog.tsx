@@ -45,9 +45,34 @@ const DetailBlog: React.FC = () => {
         <div className="container mx-auto">
           <HeaderLight />
         </div>
-        <div className="container mx-auto">
-          <div className="">
-            <p>Next.js Pragmatis: Server Components & Client Components</p>
+        <div className="md:w-[700px] mx-auto">
+          <div className="space-y-4">
+            <div className="">
+              <h2 className="font-bold text-4xl">{detailBlog?.title}</h2>
+              <p>{detailBlog?.meta_description}</p>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <div className="border p-1 rounded-full">
+                  <img src="/logo.png" alt="drabsky" width={40} height={40} />
+                </div>
+                <p className="font-semibold">Drabs</p>
+              </div>
+              <p className="text-sm">{detailBlog?.createdAt}</p>
+            </div>
+            <hr />
+            <div className="pt-6">
+              <img
+                src={detailBlog?.image}
+                alt={detailBlog?.title}
+                className="w-full"
+              />
+            </div>
+            {detailBlog && (
+              <div className="">
+                <div dangerouslySetInnerHTML={{ __html: detailBlog.content }} />
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -17,6 +17,9 @@ import Homepage from "@/pages/users/homepage/index";
 import Blogs from "@/pages/users/blogs/index";
 import AlertSessionExpired from "@/components/AlertSessionExpired";
 import DetailBlogs from "@/pages/users/blogs/DetailBlog";
+import AboutUs from "@/pages/users/about/index";
+import PortfolioUser from "@/pages/users/portfolio/index";
+import EditArticle from "@/pages/admin/articles/EditArticle";
 
 const MainRoute: React.FC = () => {
   return (
@@ -25,6 +28,8 @@ const MainRoute: React.FC = () => {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/blogs" element={<Blogs />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/portfolio" element={<PortfolioUser />} />
         <Route path="/blogs/detail/:slug/:id" element={<DetailBlogs />} />
         <Route path="/drabs/login" element={<Login />} />
         <Route path="administrator">
@@ -96,6 +101,14 @@ const MainRoute: React.FC = () => {
               element={
                 <PrivateRoute>
                   <AddArticle />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="edit/:id"
+              element={
+                <PrivateRoute>
+                  <EditArticle />
                 </PrivateRoute>
               }
             />

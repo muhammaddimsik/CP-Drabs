@@ -1,4 +1,11 @@
-import Layout from "@/components/Layout";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import React, { useRef, useState } from "react";
 
 import { z } from "zod";
@@ -17,41 +24,35 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { axiosInstance } from "@/lib/axios";
-import { Loader, Trash2 } from "lucide-react";
+import { Loader, Pencil, Trash2 } from "lucide-react";
 
 import { useToast } from "@/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 import { Textarea } from "@/components/ui/textarea";
-import { useAuth } from "@/stores/AuthStore";
+import { TPortfolio } from "@/lib/models";
 import { Label } from "@/components/ui/label";
-
-const path = [
-  {
-    name: "Portfolio",
-    url: "/administrator/portfolio",
-  },
-  {
-    name: "Add Portfolio",
-    url: "/administrator/portfolio/add-portfolio",
-  },
-];
+import { useAuth } from "@/stores/AuthStore";
 
 const formSchema = z.object({
   title: z.string().min(2).max(50, "Maksimal panjang nama adalah 50"),
   description: z.string().min(10, "Deskripsi minimal terdiri dari 10 karakter"),
 });
 
-const AddPortfolio: React.FC = () => {
+interface Props {
+  portfolio: TPortfolio;
+  getDataPortfolio: () => void;
+}
+
+const EditPortfolio: React.FC<Props> = ({
+  portfolio,
+  getDataPortfolio: refetch,
+}) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: portfolio.title,
+      description: portfolio.description,
     },
   });
-
-  const { toast } = useToast();
-  const navigate = useNavigate();
 
   const { accessToken } = useAuth();
 
@@ -76,6 +77,9 @@ const AddPortfolio: React.FC = () => {
     }
   };
 
+  const { toast } = useToast();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
@@ -84,6 +88,8 @@ const AddPortfolio: React.FC = () => {
 
     if (imgToUpload) {
       imageUrl = await getLinkImg(imgToUpload);
+    } else if (preveiw) {
+      imageUrl = preveiw;
     }
 
     const body = {
@@ -91,27 +97,22 @@ const AddPortfolio: React.FC = () => {
       image: imageUrl,
     };
 
-    console.log(body);
     try {
-      await axiosInstance.post("portofolio", body, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      await axiosInstance.put(`portofolio/${portfolio.id_portofolio}`, body);
 
       toast({
         title: "Success",
-        description: "Data portfolio berhasil ditambahkan",
+        description: "Data portfolio berhasil diubah",
         variant: "success",
       });
 
-      navigate("/administrator/portfolio");
+      setIsOpen(false);
+      refetch();
     } catch (error) {
       console.log(error);
       toast({
         title: "Error",
-        description:
-          "Data portfolio gagal ditambahkan, coba beberapa saat lagi.",
+        description: "Data portfolio gagal diubah, coba beberapa saat lagi.",
         variant: "destructive",
       });
     } finally {
@@ -120,7 +121,7 @@ const AddPortfolio: React.FC = () => {
   };
 
   const [imgToUpload, setImgToUpload] = useState<File>();
-  const [preveiw, setPreview] = useState<string | null>("");
+  const [preveiw, setPreview] = useState<string | null>(portfolio.image);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,52 +144,31 @@ const AddPortfolio: React.FC = () => {
   };
 
   return (
-    <Layout path={path} title="Add Portfolio">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div className="bg-white rounded-xl p-4 flex gap-6">
-            <div className="w-1/2 space-y-4">
-              <div>
-                <Label htmlFor="pict">Image</Label>
-                <Input
-                  id="pict"
-                  type="file"
-                  onChange={handleFileChange}
-                  accept="image/*"
-                  ref={fileInputRef}
-                />
-                {preveiw && (
-                  <div className="mt-2">
-                    <Label
-                      htmlFor="pict"
-                      className="border rounded-md flex justify-center py-2"
-                    >
-                      <img
-                        src={preveiw ? preveiw : ""}
-                        alt="prevew-wisata"
-                        className="max-h-40"
-                      />
-                    </Label>
-                    <div className="text-center py-2 border rounded-md mt-1">
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={removeImg}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button size="sm" onClick={() => setIsOpen(true)}>
+          <Pencil className="w-4" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit Portfolio</DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="bg-white rounded-xl space-y-4">
               <FormField
                 control={form.control}
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nama Portfolio</FormLabel>
+                    <FormLabel>Judul</FormLabel>
                     <FormControl>
-                      <Input placeholder="ex. Web Development" {...field} />
+                      <Input
+                        className="text-sm"
+                        placeholder="ex. PT IDMETAFORA"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -210,17 +190,52 @@ const AddPortfolio: React.FC = () => {
                   </FormItem>
                 )}
               />
+              <div>
+                <Label htmlFor="pict">Image</Label>
+                <Input
+                  id="pict"
+                  type="file"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  ref={fileInputRef}
+                />
+                {preveiw && (
+                  <div className="mt-2">
+                    <Label
+                      htmlFor="pict"
+                      className="border rounded-md flex justify-center py-2"
+                    >
+                      <img
+                        src={preveiw ? preveiw : ""}
+                        alt="prevew-client"
+                        className="max-h-40"
+                      />
+                    </Label>
+                    <div className="text-center py-2 border rounded-md mt-1">
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={removeImg}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="bg-white w-full py-2 px-4 flex justify-end">
-            <Button size="sm" type="submit">
-              {isLoading ? <Loader className="animate-spin" /> : "Simpan"}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </Layout>
+            <DialogFooter>
+              <div className="bg-white w-full py-2 px-4 flex justify-end">
+                <Button size="sm" type="submit">
+                  {isLoading ? <Loader className="animate-spin" /> : "Simpan"}
+                </Button>
+              </div>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default AddPortfolio;
+export default EditPortfolio;

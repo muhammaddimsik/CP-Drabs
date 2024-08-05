@@ -6,9 +6,9 @@ const Footer: React.FC = () => {
   return (
     <section className="bg-[#0F2028] py-20">
       <div className="container mx-auto">
-        <div className="flex items-center justify-between">
+        <div className="md:flex items-center justify-between">
           <h2 className="text-white anton text-3xl">Let's Stay Connected</h2>
-          <div className="flex gap-2 item-center justify-center">
+          <div className="flex gap-2 item-center md:justify-center">
             <button className="flex items-center gap-1 rounded-full py-3 px-6 bg-[#EDFF71] hover:bg-[#DBED5F]">
               <svg
                 width="24"

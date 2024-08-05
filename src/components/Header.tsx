@@ -35,7 +35,7 @@ const Header: React.FC = () => {
           <p className="font-medium text-white">Drabsky</p>
         </Link>
       </div>
-      <nav className="w-6/12">
+      <nav className="hidden md:block w-6/12">
         <ul className="flex justify-center gap-6">
           {navigations.map((item, i) => (
             <li key={i}>
@@ -53,7 +53,7 @@ const Header: React.FC = () => {
           ))}
         </ul>
       </nav>
-      <div className="w-3/12 flex justify-end">
+      <div className="hidden w-3/12 md:flex justify-end">
         <ButtonCustom>Get in Touch</ButtonCustom>
       </div>
     </header>
