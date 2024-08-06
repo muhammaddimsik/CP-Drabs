@@ -102,6 +102,8 @@ const EditArticle: React.FC = () => {
 
     if (imgToUpload) {
       imageUrl = await getLinkImg(imgToUpload);
+    } else if (preveiw) {
+      imageUrl = preveiw;
     }
 
     const body = {

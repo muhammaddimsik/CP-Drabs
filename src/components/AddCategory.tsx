@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { axiosInstance } from "@/lib/axios";
 import { Loader } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/stores/AuthStore";
 
 interface Props {
   getKategori: () => void;
@@ -25,14 +26,23 @@ const AddCategory: React.FC<Props> = ({ getKategori, type }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { toast } = useToast();
+  const { accessToken } = useAuth();
 
   const addNewCategory = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await axiosInstance.post("kategori", {
-        name_category: namaKategori,
-      });
+      await axiosInstance.post(
+        "kategori",
+        {
+          name_category: namaKategori,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
       toast({
         title: "Success",
@@ -64,7 +74,7 @@ const AddCategory: React.FC<Props> = ({ getKategori, type }) => {
         </DialogTrigger>
       )}
       <DialogContent className="sm:max-w-[425px]">
-        <form onSubmit={addNewCategory} className="space-y-4">
+        <form className="space-y-4">
           <DialogHeader>
             <DialogTitle>Tambah Kategori</DialogTitle>
           </DialogHeader>
@@ -81,7 +91,7 @@ const AddCategory: React.FC<Props> = ({ getKategori, type }) => {
             />
           </div>
           <DialogFooter>
-            <Button size="sm">
+            <Button size="sm" onClick={addNewCategory}>
               {isLoading ? <Loader className="animate-spin" /> : "Simpan"}
             </Button>
           </DialogFooter>

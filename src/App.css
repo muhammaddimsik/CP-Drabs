@@ -1,5 +1,5 @@
 .container {
-  width: 920px;
+  max-width: 920px;
 }
 
 .anton-regular {
@@ -10,4 +10,22 @@
 
 .anton {
   font-family: "Anton", sans-serif;
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
 }

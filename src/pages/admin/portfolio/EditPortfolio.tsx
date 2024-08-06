@@ -97,6 +97,8 @@ const EditPortfolio: React.FC<Props> = ({
       image: imageUrl,
     };
 
+    console.log(body);
+
     try {
       await axiosInstance.put(`portofolio/${portfolio.id_portofolio}`, body);
 

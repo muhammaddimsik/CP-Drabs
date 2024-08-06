@@ -8,8 +8,12 @@ const Footer: React.FC = () => {
       <div className="container mx-auto">
         <div className="md:flex items-center justify-between">
           <h2 className="text-white anton text-3xl">Let's Stay Connected</h2>
-          <div className="flex gap-2 item-center md:justify-center">
-            <button className="flex items-center gap-1 rounded-full py-3 px-6 bg-[#EDFF71] hover:bg-[#DBED5F]">
+          <div className="mt-4 md:mt-0 flex gap-2 item-center md:justify-center">
+            <a
+              href="https://api.whatsapp.com/send/?phone=6281586915991&text=Halo Drabs! Saya ingin bertanya tentang pembuatan website.&type=phone_number&app_absent=0"
+              target="_blank"
+              className="flex items-center gap-1 rounded-full py-3 px-6 bg-[#EDFF71] hover:bg-[#DBED5F]"
+            >
               <svg
                 width="24"
                 height="24"
@@ -29,11 +33,13 @@ const Footer: React.FC = () => {
                 />
               </svg>
               <p className="text-sm text-[#0F2028] font-medium">Whatsapp</p>
-            </button>
-            <button className="flex items-center gap-1 rounded-full py-3 px-6 bg-[#D0EFEF] hover:bg-[#B0E7E7]">
-              <p className="text-sm text-[#0F2028] font-medium">Portfolio</p>
-              <ArrowUpRight className="w-5" />
-            </button>
+            </a>
+            <Link to="/portfolio">
+              <button className="flex items-center gap-1 rounded-full py-3 px-6 bg-[#D0EFEF] hover:bg-[#B0E7E7]">
+                <p className="text-sm text-[#0F2028] font-medium">Portfolio</p>
+                <ArrowUpRight className="w-5" />
+              </button>
+            </Link>
           </div>
         </div>
         <hr className="rounded-full mt-6 border border-slate-700" />
@@ -65,13 +71,13 @@ const Footer: React.FC = () => {
                 Portfolio
               </Link>
               <Link
-                to="/Blog"
+                to="/Blogs"
                 className="text-sm hover:underline text-white font-light"
               >
                 Blog
               </Link>
               <Link
-                to="/about"
+                to="/about-us"
                 className="text-sm hover:underline text-white font-light"
               >
                 About Us
@@ -203,12 +209,9 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <hr />
-        <div className="md:flex justify-between mt-2 pb-4">
+        <div className="md:flex justify-end mt-2 pb-4">
           <p className="text-sm text-white font-light">
             Copyright©2023<span className="font-semibold"> Drabs</span>
-          </p>
-          <p className="text-sm text-white">
-            Privacy • Terms <span className="font-serif">&</span> Conditions
           </p>
         </div>
       </div>

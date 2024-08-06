@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { axiosInstance } from "@/lib/axios";
 import { Loader, Pencil } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/stores/AuthStore";
 
 interface Props {
   id: number;
@@ -25,14 +26,23 @@ const EditCategory: React.FC<Props> = ({ id, kategori, refetch }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { toast } = useToast();
+  const { accessToken } = useAuth();
 
   const editCategories = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await axiosInstance.put(`kategori/${id}`, {
-        name_category: namaKategori,
-      });
+      await axiosInstance.put(
+        `kategori/${id}`,
+        {
+          name_category: namaKategori,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
       toast({
         title: "Success",

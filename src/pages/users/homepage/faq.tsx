@@ -39,7 +39,11 @@ const Faq: React.FC = () => {
     <section className="bg-[#F8F8F8] py-20">
       <div className="container mx-auto space-y-10">
         <div className="flex justify-center">
-          <img src="/question-img.png" alt="question-img" className="w-1/3" />
+          <img
+            src="/question-img.png"
+            alt="question-img"
+            className="md:w-1/3 w-2/3"
+          />
         </div>
         <div className="my-4 space-y-1">
           <h2 className="text-[#0F2028] anton text-center text-5xl">
@@ -48,12 +52,12 @@ const Faq: React.FC = () => {
           <h2 className="text-[#0F2028] anton text-center text-5xl">
             Questions
           </h2>
-          <p className="text-[#0F2028] text-sm text-center w-1/2 mx-auto">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-            varius arcu urna, et hendrerit.
+          <p className="text-[#0F2028] text-sm text-center md:w-1/2 mx-auto">
+            Temukan jawaban atas pertanyaan yang sering diajukan mengenai
+            layanan kami.
           </p>
         </div>
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" collapsible className="">
           <div className="space-y-3">
             {faqs.map((f, i) => (
               <AccordionItem
@@ -61,8 +65,10 @@ const Faq: React.FC = () => {
                 className="border rounded-xl px-6 border-slate-500"
                 key={i}
               >
-                <AccordionTrigger>{f.question}</AccordionTrigger>
-                <AccordionContent className="leading-relaxed">
+                <AccordionTrigger className="text-start">
+                  {f.question}
+                </AccordionTrigger>
+                <AccordionContent className="leading-relaxed w-full">
                   {f.answer}
                 </AccordionContent>
               </AccordionItem>

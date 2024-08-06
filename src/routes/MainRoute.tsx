@@ -20,11 +20,13 @@ import DetailBlogs from "@/pages/users/blogs/DetailBlog";
 import AboutUs from "@/pages/users/about/index";
 import PortfolioUser from "@/pages/users/portfolio/index";
 import EditArticle from "@/pages/admin/articles/EditArticle";
+import ScrollToTop from "@/lib/scrollToTop";
 
 const MainRoute: React.FC = () => {
   return (
     <BrowserRouter>
       <AlertSessionExpired />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/blogs" element={<Blogs />} />

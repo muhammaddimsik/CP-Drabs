@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { formatDateSort } from "@/lib/formatDateSort";
 import { TArticles } from "@/lib/models";
 import axios from "axios";
-import { EyeIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -46,11 +46,11 @@ const ListBlogs: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-between">
-      <main className="w-8/12 space-y-6 mt-10">
+    <div className="md:flex justify-between">
+      <main className="md:w-8/12 w-full space-y-6 mt-10">
         <p>Blog Terbaru</p>
         <hr />
-        <div className="pr-10">
+        <div className="md:pr-10">
           {isLoading
             ? [1, 2, 3, 4, 5].map((item) => (
                 <div className="space-y-4" key={item}>
@@ -69,7 +69,7 @@ const ListBlogs: React.FC = () => {
                   </div>
                 </div>
               ))
-            : dataBlogs?.slice(0, 5).map((item) => (
+            : dataBlogs?.slice(0, 10).map((item) => (
                 <div key={item.id_article} className="space-y-6 mt-4">
                   <Link
                     to={`/blogs/detail/${createSlug(item.title)}/${
@@ -77,7 +77,7 @@ const ListBlogs: React.FC = () => {
                     }`}
                     className="space-y-4"
                   >
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-between md:justify-start gap-4">
                       <div className="flex items-center gap-2">
                         <div className="border p-1 rounded-full">
                           <img
@@ -89,7 +89,9 @@ const ListBlogs: React.FC = () => {
                         </div>
                         <p className="text-sm">Drabs</p>
                       </div>
-                      <p className="text-sm">{item.createdAt}</p>
+                      <p className="text-sm">
+                        {formatDateSort(item.createdAt)}
+                      </p>
                     </div>
                     <div className="flex gap-2">
                       <div className="w-8/12">
@@ -106,7 +108,7 @@ const ListBlogs: React.FC = () => {
                         <img
                           src={item.image}
                           alt={item.title}
-                          className="max-h-28 max-w-40"
+                          className="md:h-28 md:w-40 w-20 h-16 object-cover"
                         />
                       </div>
                     </div>
@@ -121,7 +123,7 @@ const ListBlogs: React.FC = () => {
               ))}
         </div>
       </main>
-      <aside className="w-4/12 border-l pl-10">
+      <aside className="md:block hidden w-4/12 border-l pl-10">
         <div className="mt-10 mb-6">
           <h3>Trending</h3>
         </div>

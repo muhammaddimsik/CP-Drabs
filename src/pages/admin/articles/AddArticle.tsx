@@ -49,7 +49,7 @@ const path = [
 ];
 
 const formSchema = z.object({
-  title: z.string().min(2).max(50, "Maksimal panjang title adalah 50"),
+  title: z.string().min(2).max(500, "Maksimal panjang title adalah 500"),
   categori_id: z.string(),
   content: z.string().min(10, "Deskripsi minimal terdiri dari 10 karakter"),
   meta_description: z.string(),

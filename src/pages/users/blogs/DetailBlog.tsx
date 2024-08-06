@@ -1,9 +1,13 @@
+import Footer from "@/components/Footer";
 import HeaderLight from "@/components/HeaderLight";
 import Seo from "@/components/Seo";
+import { Skeleton } from "@/components/ui/skeleton";
+import { formatDate } from "@/lib/formatDate";
+import { formatDateSort } from "@/lib/formatDateSort";
 import { TArticles } from "@/lib/models";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const DetailBlog: React.FC = () => {
   const params = useParams();
@@ -25,9 +29,34 @@ const DetailBlog: React.FC = () => {
     }
   };
 
+  const [dataArticles, setDataArticles] = useState<TArticles[]>();
+  const [isLoadingArticles, setIsLoadingArticles] = useState(false);
+  const getDataArticles = async () => {
+    setIsLoadingArticles(true);
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/article?limit=9999&offset=0"`
+      );
+      setDataArticles(response.data.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoadingArticles(false);
+    }
+  };
+
   useEffect(() => {
     getDetailBlog();
-  }, []);
+    getDataArticles();
+  }, [params.id]);
+
+  const createSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "") // Menghapus karakter khusus
+      .replace(/\s+/g, "-") // Mengganti spasi dengan tanda hubung
+      .replace(/-+/g, "-"); // Mengganti beberapa tanda hubung dengan satu
+  };
 
   return (
     <>
@@ -45,36 +74,137 @@ const DetailBlog: React.FC = () => {
         <div className="container mx-auto">
           <HeaderLight />
         </div>
-        <div className="md:w-[700px] mx-auto">
-          <div className="space-y-4">
-            <div className="">
-              <h2 className="font-bold text-4xl">{detailBlog?.title}</h2>
-              <p>{detailBlog?.meta_description}</p>
-            </div>
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-2">
-                <div className="border p-1 rounded-full">
-                  <img src="/logo.png" alt="drabsky" width={40} height={40} />
+        <div className="px-6 md:w-[700px] mx-auto">
+          {isLoading ? (
+            <div className="space-y-4 mb-10">
+              <div className="space-y-1">
+                <Skeleton className="w-full h-10" />
+                <Skeleton className="w-2/3 h-10" />
+              </div>
+              <div className="space-y-2">
+                <Skeleton className="w-1/2 h-6" />
+                <Skeleton className="w-full h-6" />
+              </div>
+              <div className="space-y-4">
+                <Skeleton className="w-full h-96" />
+                <div className="space-y-1">
+                  <Skeleton className="w-full h-6" />
+                  <Skeleton className="w-2/3 h-6" />
                 </div>
-                <p className="font-semibold">Drabs</p>
               </div>
-              <p className="text-sm">{detailBlog?.createdAt}</p>
             </div>
-            <hr />
-            <div className="pt-6">
-              <img
-                src={detailBlog?.image}
-                alt={detailBlog?.title}
-                className="w-full"
-              />
-            </div>
-            {detailBlog && (
-              <div className="">
-                <div dangerouslySetInnerHTML={{ __html: detailBlog.content }} />
+          ) : detailBlog ? (
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <h2 className="font-bold text-4xl">{detailBlog?.title}</h2>
+                <p>{detailBlog?.meta_description}</p>
               </div>
-            )}
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-2">
+                  <div className="border p-1 rounded-full">
+                    <img src="/logo.png" alt="drabsky" width={40} height={40} />
+                  </div>
+                  <p className="font-semibold">Drabs</p>
+                </div>
+                <p className="text-sm">{formatDate(detailBlog?.createdAt)}</p>
+              </div>
+              <hr />
+              <div className="pt-6">
+                <img
+                  src={detailBlog?.image}
+                  alt={detailBlog?.title}
+                  className="w-full rounded-xl"
+                />
+              </div>
+              {detailBlog && (
+                <div className="leading-relaxed">
+                  <div
+                    dangerouslySetInnerHTML={{ __html: detailBlog.content }}
+                  />
+                  <div className="my-10">
+                    <span className="py-2 px-6 bg-gray-100 rounded-full text-sm">
+                      {detailBlog.categories?.name_categori}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <p>Data Blog tidak ditemukan</p>
+          )}
+        </div>
+        <div className="px-6 py-12">
+          <div className="md:w-[700px] mx-auto">
+            <p className="md:text-sm font-semibold">
+              Berita Lainnya dari Drabs
+            </p>
+            <div className="flex flex-wrap justify-between mt-6">
+              {isLoadingArticles
+                ? [1, 2, 3, 4].map((item) => (
+                    <div
+                      className="w-full md:w-1/2 md:p-4 space-y-4"
+                      key={item}
+                    >
+                      <Skeleton className="w-full h-44" />
+                      <div className="space-y-1">
+                        <Skeleton className="w-full h-6" />
+                        <Skeleton className="w-2/3 h-6" />
+                        <div className="">
+                          <Skeleton className="w-full h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                : dataArticles?.slice(0, 5).map((item) => (
+                    <Link
+                      to={`/blogs/detail/${createSlug(item.title)}/${
+                        item.id_article
+                      }`}
+                      className="w-full md:w-1/2 md:p-4 py-4 md:py-4 space-y-4"
+                      key={item.id_article}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-44 object-"
+                      />
+                      <div className="space-y-2">
+                        <div className="flex gap-2 items-center">
+                          <div className="border p-1 rounded-full">
+                            <img
+                              src="/logo.png"
+                              alt="drabsky"
+                              width={20}
+                              height={20}
+                            />
+                          </div>
+                          <p className="text-sm">Drabs</p>
+                        </div>
+                        <div className="min-h-16">
+                          <h3 className="line-clamp-2 font-semibold">
+                            {item.title}
+                          </h3>
+                          <p className="line-clamp-1 text-sm text-gray-500">
+                            {item.meta_description}
+                          </p>
+                        </div>
+                        <hr />
+                        <div className="flex gap-2">
+                          <p className="text-xs text-gray-500">
+                            {formatDateSort(item.createdAt)}
+                          </p>
+                          <p className="text-xs text-gray-500">||</p>
+                          <p className="text-xs text-gray-500">
+                            {item.categories?.name_categori}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+            </div>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );
