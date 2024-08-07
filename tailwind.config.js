@@ -22,6 +22,7 @@ module.exports = {
         cyellow: "#EDFF71",
         cblue: "#D0EFEF",
         cdark: "#27363D",
+        cprimary: "#00AEF0",
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

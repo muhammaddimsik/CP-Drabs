@@ -1,18 +1,24 @@
+import Footer from "@/components/Footer";
+import HeaderLight from "@/components/HeaderLight";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/formatDate";
 import { TArticles } from "@/lib/models";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
-const ListBlogs: React.FC = () => {
+const BlogSearch: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("query");
+
   const [isLoading, setIsLoading] = useState(false);
   const [dataBlogs, setDataBlogs] = useState<TArticles[]>();
-  const getBlogs = async () => {
+
+  const getBlogSearch = async () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/article?limit=9999&offset=0`
+        `${import.meta.env.VITE_BASE_URL}/article?search=${query}`
       );
       setDataBlogs(response.data.data);
     } catch (error) {
@@ -23,19 +29,8 @@ const ListBlogs: React.FC = () => {
   };
 
   useEffect(() => {
-    getBlogs();
-  }, []);
-
-  const [blogsTrending, setBlogsTrending] = useState<TArticles[]>();
-
-  useEffect(() => {
-    if (dataBlogs) {
-      const sortedBlogs = dataBlogs?.sort(
-        (a, b) => b.view_count - a.view_count
-      );
-      setBlogsTrending(sortedBlogs);
-    }
-  }, [dataBlogs]);
+    getBlogSearch();
+  }, [query]);
 
   const createSlug = (title: string) => {
     return title
@@ -46,11 +41,10 @@ const ListBlogs: React.FC = () => {
   };
 
   return (
-    <div className="md:flex justify-between">
-      <main className="md:w-8/12 w-full space-y-6 mt-10">
-        <p>Blog Terbaru</p>
-        <hr />
-        <div className="md:pr-10">
+    <div className="w-full">
+      <HeaderLight isOpen={false} />
+      <div className="container mx-auto">
+        <div className="mt-6 mb-10">
           {isLoading
             ? [1, 2, 3, 4, 5].map((item) => (
                 <div className="space-y-4" key={item}>
@@ -120,50 +114,10 @@ const ListBlogs: React.FC = () => {
                 </div>
               ))}
         </div>
-      </main>
-      <aside className="md:block hidden w-4/12 border-l pl-10">
-        <div className="mt-10 mb-6">
-          <h3>Trending</h3>
-        </div>
-        <div className="">
-          <ol className="space-y-4">
-            {isLoading
-              ? [1, 2, 3, 4, 5].map((item) => (
-                  <div className="flex gap-3" key={item}>
-                    <Skeleton className="w-10 h-8" />
-                    <div className="w-full space-y-2">
-                      <Skeleton className="w-full h-8" />
-                      <div className="space-y-1">
-                        <Skeleton className="w-full h-6" />
-                        <Skeleton className="w-2/3 h-6" />
-                      </div>
-                    </div>
-                  </div>
-                ))
-              : blogsTrending?.slice(0, 10).map((item, i) => (
-                  <li key={item.id_article} className="flex gap-3">
-                    <span>{i + 1}. </span>
-                    <Link
-                      to={`/blogs/detail/${createSlug(item.title)}/${
-                        item.id_article
-                      }`}
-                    >
-                      <p className="font-semibold hover:underline line-clamp-2 lora">
-                        {item.title}
-                      </p>
-                      <p className="text-sm line-clamp-2">
-                        <div
-                          dangerouslySetInnerHTML={{ __html: item.content }}
-                        />
-                      </p>
-                    </Link>
-                  </li>
-                ))}
-          </ol>
-        </div>
-      </aside>
+      </div>
+      <Footer />
     </div>
   );
 };
 
-export default ListBlogs;
+export default BlogSearch;

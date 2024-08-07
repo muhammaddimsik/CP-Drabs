@@ -36,7 +36,7 @@ const faqs = [
 
 const Faq: React.FC = () => {
   return (
-    <section className="bg-[#F8F8F8] py-20">
+    <section className="bg-white py-20">
       <div className="container mx-auto space-y-10">
         <div className="flex justify-center">
           <img
@@ -45,14 +45,11 @@ const Faq: React.FC = () => {
             className="md:w-1/3 w-2/3"
           />
         </div>
-        <div className="my-4 space-y-1">
-          <h2 className="text-[#0F2028] anton text-center text-5xl">
-            Frequently Asked
+        <div className="my-4 space-y-1 md:w-1/2 mx-auto">
+          <h2 className="text-cdark text-center md:text-5xl text-4xl inter font-bold">
+            Frequently Asked Questions
           </h2>
-          <h2 className="text-[#0F2028] anton text-center text-5xl">
-            Questions
-          </h2>
-          <p className="text-[#0F2028] text-sm text-center md:w-1/2 mx-auto">
+          <p className="text-cdark text-center">
             Temukan jawaban atas pertanyaan yang sering diajukan mengenai
             layanan kami.
           </p>

@@ -95,7 +95,11 @@ const EditClient: React.FC<Props> = ({ client, getDataClient: refetch }) => {
     };
 
     try {
-      await axiosInstance.put(`client/${client.id_client}`, body);
+      await axiosInstance.put(`client/${client.id_client}`, body, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       toast({
         title: "Success",

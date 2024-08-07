@@ -21,6 +21,7 @@ import AboutUs from "@/pages/users/about/index";
 import PortfolioUser from "@/pages/users/portfolio/index";
 import EditArticle from "@/pages/admin/articles/EditArticle";
 import ScrollToTop from "@/lib/scrollToTop";
+import BlogSearch from "@/pages/users/blogs/BlogSearch";
 
 const MainRoute: React.FC = () => {
   return (
@@ -31,6 +32,7 @@ const MainRoute: React.FC = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/search" element={<BlogSearch />} />
         <Route path="/portfolio" element={<PortfolioUser />} />
         <Route path="/blogs/detail/:slug/:id" element={<DetailBlogs />} />
         <Route path="/drabs/login" element={<Login />} />

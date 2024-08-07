@@ -30,6 +30,7 @@ import { Loader, Pencil } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { TServices } from "@/lib/models";
+import { useAuth } from "@/stores/AuthStore";
 
 const formSchema = z.object({
   title: z.string().min(2).max(50, "Maksimal panjang nama adalah 50"),
@@ -57,13 +58,18 @@ const EditService: React.FC<Props> = ({
 
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { accessToken } = useAuth();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
 
     try {
-      await axiosInstance.put(`services/${services.id_service}`, values);
+      await axiosInstance.put(`services/${services.id_service}`, values, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       toast({
         title: "Success",

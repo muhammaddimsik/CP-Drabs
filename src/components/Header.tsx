@@ -44,7 +44,10 @@ const Header: React.FC = () => {
     <header className="w-full flex justify-between items-center py-10">
       <div className="w-3/12">
         <Link to="/">
-          <p className="font-medium text-white">Drabsky</p>
+          <div className="flex items-center">
+            <img src="/logo.png" alt="logo-drabs" className="w-12" />
+            <p className="font-medium text-white">Drabsky</p>
+          </div>
         </Link>
       </div>
       <nav className="hidden md:block w-6/12">

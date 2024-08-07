@@ -1,5 +1,5 @@
 .container {
-  max-width: 920px;
+  max-width: 1000px;
 }
 
 .anton-regular {
@@ -10,6 +10,22 @@
 
 .anton {
   font-family: "Anton", sans-serif;
+}
+
+.inter {
+  font-family: "Inter", sans-serif;
+}
+
+.lora {
+  font-family: "Lora", serif;
+}
+
+.roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.open-sans {
+  font-family: "Open Sans", sans-serif;
 }
 
 @keyframes slide-in-right {

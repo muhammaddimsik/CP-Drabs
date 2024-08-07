@@ -96,11 +96,12 @@ const EditPortfolio: React.FC<Props> = ({
       ...values,
       image: imageUrl,
     };
-
-    console.log(body);
-
     try {
-      await axiosInstance.put(`portofolio/${portfolio.id_portofolio}`, body);
+      await axiosInstance.put(`portofolio/${portfolio.id_portofolio}`, body, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       toast({
         title: "Success",

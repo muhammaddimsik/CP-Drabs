@@ -3,7 +3,6 @@ import HeaderLight from "@/components/HeaderLight";
 import Seo from "@/components/Seo";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/formatDate";
-import { formatDateSort } from "@/lib/formatDateSort";
 import { TArticles } from "@/lib/models";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -71,10 +70,8 @@ const DetailBlog: React.FC = () => {
         />
       )}
       <div className="w-full">
-        <div className="container mx-auto">
-          <HeaderLight />
-        </div>
-        <div className="px-6 md:w-[700px] mx-auto">
+        <HeaderLight isOpen={false} />
+        <div className="px-6 md:w-[700px] mx-auto md:mt-10 mt-4">
           {isLoading ? (
             <div className="space-y-4 mb-10">
               <div className="space-y-1">
@@ -96,7 +93,9 @@ const DetailBlog: React.FC = () => {
           ) : detailBlog ? (
             <div className="space-y-4">
               <div className="space-y-2">
-                <h2 className="font-bold text-4xl">{detailBlog?.title}</h2>
+                <h2 className="font-bold md:text-4xl text-3xl leading-normal lora">
+                  {detailBlog?.title}
+                </h2>
                 <p>{detailBlog?.meta_description}</p>
               </div>
               <div className="flex items-center justify-between gap-4">
@@ -166,7 +165,7 @@ const DetailBlog: React.FC = () => {
                       <img
                         src={item.image}
                         alt={item.title}
-                        className="w-full h-44 object-"
+                        className="w-full h-48 object-cover rounded-md"
                       />
                       <div className="space-y-2">
                         <div className="flex gap-2 items-center">
@@ -181,7 +180,7 @@ const DetailBlog: React.FC = () => {
                           <p className="text-sm">Drabs</p>
                         </div>
                         <div className="min-h-16">
-                          <h3 className="line-clamp-2 font-semibold">
+                          <h3 className="line-clamp-2 font-semibold lora text-lg">
                             {item.title}
                           </h3>
                           <p className="line-clamp-1 text-sm text-gray-500">
@@ -191,7 +190,7 @@ const DetailBlog: React.FC = () => {
                         <hr />
                         <div className="flex gap-2">
                           <p className="text-xs text-gray-500">
-                            {formatDateSort(item.createdAt)}
+                            {formatDate(item.createdAt)}
                           </p>
                           <p className="text-xs text-gray-500">||</p>
                           <p className="text-xs text-gray-500">
