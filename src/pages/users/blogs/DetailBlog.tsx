@@ -93,9 +93,9 @@ const DetailBlog: React.FC = () => {
           ) : detailBlog ? (
             <div className="space-y-4">
               <div className="space-y-2">
-                <h2 className="font-bold md:text-4xl text-3xl leading-normal lora">
+                <h1 className="font-bold md:text-4xl text-3xl lora">
                   {detailBlog?.title}
-                </h2>
+                </h1>
                 <p>{detailBlog?.meta_description}</p>
               </div>
               <div className="flex items-center justify-between gap-4">

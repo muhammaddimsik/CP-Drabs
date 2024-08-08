@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
             <a
               href="https://api.whatsapp.com/send/?phone=6285640943430&text=Halo Drabs! Saya ingin bertanya tentang pembuatan website.&type=phone_number&app_absent=0"
               target="_blank"
-              className="flex items-center gap-1 rounded py-3 px-6 bg-cprimary hover:bg-[#DBED5F]"
+              className="flex items-center gap-1 rounded py-3 px-6 bg-green-500 hover:bg-green-600"
             >
               <svg
                 width="24"

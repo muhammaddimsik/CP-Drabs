@@ -18,7 +18,7 @@ const index: React.FC = () => {
     <>
       <Seo
         title="Blog's - Drabsky"
-        description="Kumpulan blog Drab Sky Technology"
+        description="Temukan perkembangan dan tips teknologi di blog Drab Sky Technology"
         type="website"
         name="Drabsky"
         image="/logo.png"
@@ -35,7 +35,7 @@ const index: React.FC = () => {
                 </p>
                 <div className="md:w-1/2 mx-auto py-4">
                   <h1 className="text-cdark md:text-5xl text-4xl text-center anton">
-                    Tech
+                    Discover Tech
                     <span className="text-cprimary"> Trend & Tips</span>
                   </h1>
                 </div>

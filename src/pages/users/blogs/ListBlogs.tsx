@@ -2,19 +2,26 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/formatDate";
 import { TArticles } from "@/lib/models";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const ListBlogs: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [dataBlogs, setDataBlogs] = useState<TArticles[]>();
+  const [dataBlogs, setDataBlogs] = useState<TArticles[]>([]);
+  const [limit, setLimit] = useState(1);
+  const [totalBlogs, setTotalBlogs] = useState(0);
+
+  const footerRef = useRef<HTMLDivElement>(null);
+
   const getBlogs = async () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/article?limit=9999&offset=0`
+        `${import.meta.env.VITE_BASE_URL}/article?limit=${limit}&offset=0`
       );
+
       setDataBlogs(response.data.data);
+      setTotalBlogs(response.data.total);
     } catch (error) {
       console.log(error);
     } finally {
@@ -24,10 +31,31 @@ const ListBlogs: React.FC = () => {
 
   useEffect(() => {
     getBlogs();
-  }, []);
+  }, [limit]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (footerRef.current) {
+        const footerPosition = footerRef.current.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (
+          footerPosition <= windowHeight &&
+          !isLoading &&
+          dataBlogs.length < totalBlogs
+        ) {
+          setLimit((prevLimit) => prevLimit + 5);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isLoading, dataBlogs.length, totalBlogs]);
 
   const [blogsTrending, setBlogsTrending] = useState<TArticles[]>();
-
   useEffect(() => {
     if (dataBlogs) {
       const sortedBlogs = dataBlogs?.sort(
@@ -162,6 +190,7 @@ const ListBlogs: React.FC = () => {
           </ol>
         </div>
       </aside>
+      <div ref={footerRef}></div>
     </div>
   );
 };

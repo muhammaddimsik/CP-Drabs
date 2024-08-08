@@ -73,7 +73,7 @@ const HeaderLight: React.FC<Props> = ({ isOpen }) => {
   return (
     <div
       className={`w-full sticky top-0 z-10 bg-white transition-shadow duration-300 ${
-        hasShadow ? "shadow-md" : ""
+        hasShadow ? `shadow-md ` : ""
       }`}
     >
       <header>
@@ -185,7 +185,7 @@ const HeaderLight: React.FC<Props> = ({ isOpen }) => {
             </div>
           </div>
         </div>
-        <div className="container flex justify-between items-center md:py-6 py-3">
+        <div className="container flex justify-between items-center md:py-4 py-3">
           <div className="w-3/12">
             <Link to="/">
               <div className="flex items-center">
@@ -235,7 +235,7 @@ const HeaderLight: React.FC<Props> = ({ isOpen }) => {
                     <li key={i}>
                       <Link
                         to={item.path}
-                        className={`text-sm block py-1 hover:text-cprimary hover:border-b border-cprimary ${
+                        className={`block py-2 hover:text-cprimary hover:border-b border-cprimary ${
                           location.pathname == item.path ? "" : "text-cdark"
                         }`}
                       >
@@ -319,14 +319,16 @@ const HeaderLight: React.FC<Props> = ({ isOpen }) => {
         </div>
       </header>
       {isOpenSearch && (
-        <div className="container mx-auto bg-cprimary/70 rounded">
-          <div className="md:w-1/2 py-3 mx-auto mb-6">
-            <form onSubmit={handleSubmit}>
-              <Search
-                placeholder="Search blog..."
-                onChange={(e) => setQuery(e.target.value)}
-              />
-            </form>
+        <div className="md:pb-2">
+          <div className="container mx-auto bg-cprimary/70 rounded">
+            <div className="md:w-1/2 py-3 mx-auto">
+              <form onSubmit={handleSubmit}>
+                <Search
+                  placeholder="Search blog..."
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+              </form>
+            </div>
           </div>
         </div>
       )}

@@ -32,7 +32,7 @@ const index: React.FC = () => {
     <>
       <Seo
         title="Portfolio - Drabsky"
-        description="PT Drabsky Technology telah bekerjasama dengan banyak klien"
+        description="PT Drabsky Technology telah bekerjasama dengan banyak mitra dan klien dalam berbagai project luar biasa."
         type="website"
         name="Drabsky"
         image="/logo.png"
@@ -48,8 +48,7 @@ const index: React.FC = () => {
               </p>
               <div className="md:w-1/2 mx-auto py-4">
                 <h1 className="text-cdark md:text-5xl text-4xl text-center anton">
-                  Our Works
-                  <span className="text-cprimary"> Portfolio</span>
+                  Our Works &<span className="text-cprimary"> Portfolio</span>
                 </h1>
               </div>
             </div>
@@ -65,10 +64,10 @@ const index: React.FC = () => {
 
         <section className="mb-20">
           <div className="container mx-auto">
-            <div className="flex flex-wrap my-10">
+            <div className="">
               {isLoading
                 ? [1, 2, 3, 4, 5].map((item) => (
-                    <div key={item} className="p-4 md:w-4/12">
+                    <div key={item} className="p-4">
                       <div className="space-y-2">
                         <Skeleton className="w-full h-72" />
                         <Skeleton className="w-full h-10" />
@@ -77,23 +76,21 @@ const index: React.FC = () => {
                     </div>
                   ))
                 : dataPortfolio?.map((item) => (
-                    <div
-                      className="p-2 md:p-4 w-full md:w-4/12"
-                      key={item.id_portofolio}
-                    >
-                      <div className="shadow-lg rounded-lg">
-                        <div className="h-72 bg-[#0F2028]">
+                    <div className="p-2 md:p-4 w-full" key={item.id_portofolio}>
+                      <div className="md:flex gap-4">
+                        <div className="md:w-4/12 ">
                           <img
                             src={item.image}
                             alt={item.title}
                             className="h-full w-full"
                           />
                         </div>
-                        <div className="px-4 py-6">
-                          <p className="font-semibold">{item.title}</p>
+                        <div className="md:w-8/12 md:px-4 px-2 py-6">
+                          <p className="font-semibold font-xl">{item.title}</p>
                           <p className="text-sm">{item.description}</p>
                         </div>
                       </div>
+                      <hr className="my-10" />
                     </div>
                   ))}
             </div>

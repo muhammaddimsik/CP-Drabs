@@ -88,7 +88,7 @@ const index: React.FC = () => {
     <>
       <Seo
         title="Drabsky Technology"
-        description="Software House - Jasa Pembuatan Website dan Aplikasi Android"
+        description="Software House - Jasa Pembuatan Website dan Aplikasi Android Pekalongan"
         type="website"
         name="Drabsky"
         image="/logo.png"
@@ -235,7 +235,7 @@ const index: React.FC = () => {
               to="/portfolio"
               className="flex gap-1 bg-cprimary hover:bg-[#0592c9] text-white py-3 px-6 rounded"
             >
-              <p>Lihat lainnya</p>
+              <p className="text-sm">Lihat lainnya</p>
               <ArrowRight className="w-4" />
             </Link>
           </div>
@@ -336,7 +336,7 @@ const index: React.FC = () => {
                 to="/blogs"
                 className="flex gap-1 bg-cprimary hover:bg-[#0592c9] text-white py-3 px-6 rounded"
               >
-                <p>Lihat berita lainnya</p>
+                <p className="text-sm">Lihat berita lainnya</p>
                 <ArrowRight className="w-4" />
               </Link>
             </div>

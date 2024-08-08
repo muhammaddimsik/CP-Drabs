@@ -45,11 +45,13 @@ import Logo from "/logo.png";
 
 const formSchema = z.object({
   username: z.string().min(1, "username tidak boleh kosong"),
-  password: z.string().min(8, "Password harus terdiri dari minimal 8 karakter"),
-  // .regex(
-  //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/,
-  //   "Password harus mengandung huruf kecil, huruf kapital, angka, dan karakter spesial"
-  // ),
+  password: z
+    .string()
+    .min(8, "Password harus terdiri dari minimal 8 karakter")
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/,
+      "Password harus mengandung huruf kecil, huruf kapital, angka, dan karakter spesial"
+    ),
 });
 
 interface BodyLogin {
@@ -114,7 +116,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="w-full flex justify-center items-center min-h-screen bg-slate-100">
-      <Card className="min-w-[350px] p-4 border-blue-400">
+      <Card className="max-w-[350px] p-3 border-blue-400">
         <CardHeader className="text-center space-y-4">
           <Link to="/">
             <div className="lg:flex flex-col justify-center items-center gap-2">

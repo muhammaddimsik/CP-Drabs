@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import HeaderLight from "@/components/HeaderLight";
+import Seo from "@/components/Seo";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/formatDate";
 import { TArticles } from "@/lib/models";
@@ -41,12 +42,21 @@ const BlogSearch: React.FC = () => {
   };
 
   return (
-    <div className="w-full">
-      <HeaderLight isOpen={false} />
-      <div className="container mx-auto">
-        <div className="mt-6 mb-10">
-          {isLoading
-            ? [1, 2, 3, 4, 5].map((item) => (
+    <>
+      <Seo
+        title="Blog's - Drabsky"
+        description="Temukan perkembangan dan tips teknologi di blog Drab Sky Technology"
+        type="website"
+        name="Drabsky"
+        image="/logo.png"
+        url="https://www.drabsky.com/blogs"
+      />
+      <div className="w-full">
+        <HeaderLight isOpen={true} />
+        <div className="container mx-auto">
+          <div className="mt-6 mb-10">
+            {isLoading ? (
+              [1, 2, 3, 4, 5].map((item) => (
                 <div className="space-y-4" key={item}>
                   <div className="flex gap-2">
                     <div className="w-8/12 space-y-2">
@@ -63,7 +73,8 @@ const BlogSearch: React.FC = () => {
                   </div>
                 </div>
               ))
-            : dataBlogs?.slice(0, 10).map((item) => (
+            ) : dataBlogs && dataBlogs.length != 0 ? (
+              dataBlogs.slice(0, 10).map((item) => (
                 <div key={item.id_article} className="space-y-6 mt-4">
                   <Link
                     to={`/blogs/detail/${createSlug(item.title)}/${
@@ -112,11 +123,17 @@ const BlogSearch: React.FC = () => {
                   </Link>
                   <hr />
                 </div>
-              ))}
+              ))
+            ) : (
+              <p className="text italic">
+                Hasil pencarian "<b>{query}</b>" tidak ditemukan
+              </p>
+            )}
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 };
 

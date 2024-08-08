@@ -53,7 +53,7 @@ const index: React.FC = () => {
     <>
       <Seo
         title="Tentang Kami - Drabsky"
-        description="Perusahaan kami berfokus pada pengembangan perangkat lunak dan layanan konsultasi IT. "
+        description="Perusahaan kami berfokus pada pembuatan aplikasi android dan website. "
         type="website"
         name="Drabsky"
         image="/logo.png"
@@ -88,7 +88,7 @@ const index: React.FC = () => {
 
         <section>
           <div className="container mx-auto py-12 px-6 md:px-0">
-            <h2 className="text-4xl font-semibold text-center">
+            <h2 className="md:text-4xl text-3xl font-semibold text-center">
               About Our Business
             </h2>
             <p className="text-center mt-4">
@@ -109,8 +109,10 @@ const index: React.FC = () => {
 
         <section>
           <div className="container mx-auto py-6 md:py-12 px-6 md:px-0">
-            <h2 className="text-4xl font-semibold">Why Choose Us?</h2>
-            <div className="block md:flex items-center">
+            <h2 className="md:text-4xl text-3xl font-semibold text-center">
+              Why Choose Us?
+            </h2>
+            <div className="block md:flex gap-4 items-center">
               <div className="w-full md:w-6/12">
                 {chooseus.map((p) => (
                   <div key={p.id} className="flex gap-4 mt-4">
@@ -132,8 +134,8 @@ const index: React.FC = () => {
 
         <section>
           <div className="container mx-auto py-12 px-6 md:px-0">
-            <div className="block md:flex">
-              <h2 className="w-full md:w-5/12 text-4xl font-semibold mb-3">
+            <div className="block md:flex gap-10">
+              <h2 className="w-full md:w-5/12 text-3xl font-semibold mb-3">
                 Our Vision and Mission
               </h2>
               <p className="w-full md:w-7/12 text-sm">
