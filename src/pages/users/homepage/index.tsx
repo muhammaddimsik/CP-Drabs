@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import Seo from "@/components/Seo";
 import { TArticles, TClients, TPortfolio, TServices } from "@/lib/models";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import HeaderLight from "@/components/HeaderLight";
 
@@ -82,6 +82,18 @@ const index: React.FC = () => {
     getPortfolio();
     getClient();
     getBlogs();
+  }, []);
+
+  const location = useLocation();
+  useEffect(() => {
+    // Scroll ke elemen dengan ID yang sesuai dengan hash di URL
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   }, []);
 
   return (
@@ -206,13 +218,17 @@ const index: React.FC = () => {
             ) : (
               <div className="md:flex flex-wrap">
                 {dataPortfolio?.slice(0, 3).map((item) => (
-                  <div className="md:w-4/12 w-full space-y-4 p-2">
+                  <Link
+                    to={`/portfolio#${String(item.id_portofolio)}`}
+                    key={item.id_portofolio}
+                    className="md:w-4/12 w-full space-y-4 p-2"
+                  >
                     <div className="bg-white rounded shadow-md">
                       <div className="w-full">
                         <img
                           src={item.image}
                           alt={item.title}
-                          className="w-full md:h-56 object-cover rounded"
+                          className="w-full md:h-56 object-contain rounded"
                         />
                       </div>
                       <div className="py-4 px-6">
@@ -224,7 +240,7 @@ const index: React.FC = () => {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}
@@ -255,18 +271,20 @@ const index: React.FC = () => {
               {isLoadingClient ? (
                 <p>loading</p>
               ) : (
-                dataClient?.map((item) => (
-                  <div
-                    key={item.id_client}
-                    className="w-full md:w-auto flex justify-center md:block"
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="md:w-full md:h-20 grayscale"
-                    />
-                  </div>
-                ))
+                <div className="flex flex-wrap justify-center md:gap-2">
+                  {dataClient?.map((item) => (
+                    <div
+                      key={item.id_client}
+                      className="hover:shadow-lg rounded-lg p-4 md:w-3/12 w-1/2 md:h-32 flex justify-center items-center"
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="md:w-40 max-w-full max-h-full object-contain grayscale"
+                      />
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>
@@ -304,7 +322,11 @@ const index: React.FC = () => {
               ) : (
                 <div className="md:flex">
                   {dataBlogs?.slice(0, 3).map((item) => (
-                    <div className="md:w-4/12 w-full space-y-4 p-2">
+                    <Link
+                      to={`/blogs/${item.slug}`}
+                      key={item.id_article}
+                      className="md:w-4/12 w-full space-y-4 p-2"
+                    >
                       <div className="bg-white rounded">
                         <div className="w-full">
                           <img
@@ -325,7 +347,7 @@ const index: React.FC = () => {
                           />
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               )}

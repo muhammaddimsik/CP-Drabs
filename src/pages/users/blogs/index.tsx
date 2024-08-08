@@ -33,7 +33,7 @@ const index: React.FC = () => {
                 <p className="border rounded-full py-1 px-3 text-center text-xs text-white inline backdrop-blur-sm bg-gradient-to-r from-purple-500 to-pink-500">
                   Our Blogs!🔥
                 </p>
-                <div className="md:w-1/2 mx-auto py-4">
+                <div className="md:w-1/3 mx-auto py-4">
                   <h1 className="text-cdark md:text-5xl text-4xl text-center anton">
                     Discover Tech
                     <span className="text-cprimary"> Trend & Tips</span>

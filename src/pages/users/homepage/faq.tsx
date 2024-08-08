@@ -45,7 +45,7 @@ const Faq: React.FC = () => {
             className="md:w-1/3 w-2/3"
           />
         </div>
-        <div className="my-4 space-y-1 md:w-1/2 mx-auto">
+        <div className="my-4 space-y-1 md:w-1/2 mx-auto" id="faq">
           <h2 className="text-cdark text-center md:text-5xl text-4xl inter font-bold">
             Frequently Asked Questions
           </h2>

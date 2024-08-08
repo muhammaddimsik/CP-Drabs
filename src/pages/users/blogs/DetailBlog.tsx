@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import HeaderLight from "@/components/HeaderLight";
 import Seo from "@/components/Seo";
+import ShareMedsos from "@/components/ShareMedsos";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/formatDate";
 import { TArticles } from "@/lib/models";
@@ -18,7 +19,7 @@ const DetailBlog: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/article/${params.id}`
+        `${import.meta.env.VITE_BASE_URL}/article-byslug/${params.slug}`
       );
       setDetailBlog(response.data.data);
     } catch (error) {
@@ -47,15 +48,7 @@ const DetailBlog: React.FC = () => {
   useEffect(() => {
     getDetailBlog();
     getDataArticles();
-  }, [params.id]);
-
-  const createSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "") // Menghapus karakter khusus
-      .replace(/\s+/g, "-") // Mengganti spasi dengan tanda hubung
-      .replace(/-+/g, "-"); // Mengganti beberapa tanda hubung dengan satu
-  };
+  }, [params.slug]);
 
   return (
     <>
@@ -66,7 +59,7 @@ const DetailBlog: React.FC = () => {
           type="article"
           name="Drabsky"
           image={detailBlog.image}
-          url={`https://www.drabsky.com/blogs/detail/${params.slug}/${params.id}`}
+          url={`https://www.drabsky.com/blogs/${params.slug}`}
         />
       )}
       <div className="w-full">
@@ -120,10 +113,17 @@ const DetailBlog: React.FC = () => {
                   <div
                     dangerouslySetInnerHTML={{ __html: detailBlog.content }}
                   />
-                  <div className="my-10">
+                  <div className="my-10 flex justify-between items-center">
                     <span className="py-2 px-6 bg-gray-100 rounded-full text-sm">
                       {detailBlog.categories?.name_categori}
                     </span>
+                    <div className="flex gap-2 items-center">
+                      <p>Share to:</p>
+                      <ShareMedsos
+                        size="10"
+                        url={`/blogs/${detailBlog.slug}`}
+                      />
+                    </div>
                   </div>
                 </div>
               )}
@@ -156,9 +156,7 @@ const DetailBlog: React.FC = () => {
                   ))
                 : dataArticles?.slice(0, 5).map((item) => (
                     <Link
-                      to={`/blogs/detail/${createSlug(item.title)}/${
-                        item.id_article
-                      }`}
+                      to={`/blogs/${item.slug}`}
                       className="w-full md:w-1/2 md:p-4 py-4 md:py-4 space-y-4"
                       key={item.id_article}
                     >

@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import HeaderLight from "@/components/HeaderLight";
 import Seo from "@/components/Seo";
+import ShareMedsos from "@/components/ShareMedsos";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/formatDate";
 import { TArticles } from "@/lib/models";
@@ -116,9 +117,8 @@ const BlogSearch: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
-                      <p className="text-sm">
-                        {item.categories?.name_categori}
-                      </p>
+                      <p className="text-sm">Share:</p>
+                      <ShareMedsos url={`/blogs/${item.slug}`} size="6" />
                     </div>
                   </Link>
                   <hr />

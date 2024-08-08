@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { TPortfolio } from "@/lib/models";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const index: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +28,19 @@ const index: React.FC = () => {
   useEffect(() => {
     getPortfolio();
   }, []);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    // Scroll ke elemen dengan ID yang sesuai dengan hash di URL
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location, dataPortfolio]);
 
   return (
     <>
@@ -76,18 +90,26 @@ const index: React.FC = () => {
                     </div>
                   ))
                 : dataPortfolio?.map((item) => (
-                    <div className="p-2 md:p-4 w-full" key={item.id_portofolio}>
-                      <div className="md:flex gap-4">
-                        <div className="md:w-4/12 ">
+                    <div
+                      className="p-2 md:p-4 w-full"
+                      key={item.id_portofolio}
+                      id={String(item.id_portofolio)}
+                    >
+                      <div className="md:flex">
+                        <div className="md:w-4/12 md:h-40">
                           <img
                             src={item.image}
                             alt={item.title}
-                            className="h-full w-full"
+                            className="h-full w-full object-contain"
                           />
                         </div>
                         <div className="md:w-8/12 md:px-4 px-2 py-6">
-                          <p className="font-semibold font-xl">{item.title}</p>
-                          <p className="text-sm">{item.description}</p>
+                          <p className="font-semibold text-xl leading-relaxed">
+                            {item.title}
+                          </p>
+                          <p className="text-sm leading-relaxed">
+                            {item.description}
+                          </p>
                         </div>
                       </div>
                       <hr className="my-10" />

@@ -1,3 +1,4 @@
+import ShareMedsos from "@/components/ShareMedsos";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/formatDate";
 import { TArticles } from "@/lib/models";
@@ -8,7 +9,7 @@ import { Link } from "react-router-dom";
 const ListBlogs: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [dataBlogs, setDataBlogs] = useState<TArticles[]>([]);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(5);
   const [totalBlogs, setTotalBlogs] = useState(0);
 
   const footerRef = useRef<HTMLDivElement>(null);
@@ -58,27 +59,19 @@ const ListBlogs: React.FC = () => {
   const [blogsTrending, setBlogsTrending] = useState<TArticles[]>();
   useEffect(() => {
     if (dataBlogs) {
-      const sortedBlogs = dataBlogs?.sort(
+      const sortedBlogs = [...dataBlogs].sort(
         (a, b) => b.view_count - a.view_count
       );
       setBlogsTrending(sortedBlogs);
     }
   }, [dataBlogs]);
 
-  const createSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "") // Menghapus karakter khusus
-      .replace(/\s+/g, "-") // Mengganti spasi dengan tanda hubung
-      .replace(/-+/g, "-"); // Mengganti beberapa tanda hubung dengan satu
-  };
-
   return (
     <div className="md:flex justify-between">
-      <main className="md:w-8/12 w-full space-y-6 mt-10">
+      <main className="md:w-8/12 w-full space-y-6">
         <p>Blog Terbaru</p>
         <hr />
-        <div className="md:pr-10">
+        <div className="md:pr-10 md:max-h-[500px] overflow-y-scroll no-scrollbar">
           {isLoading
             ? [1, 2, 3, 4, 5].map((item) => (
                 <div className="space-y-4" key={item}>
@@ -97,14 +90,9 @@ const ListBlogs: React.FC = () => {
                   </div>
                 </div>
               ))
-            : dataBlogs?.slice(0, 10).map((item) => (
+            : dataBlogs?.map((item) => (
                 <div key={item.id_article} className="space-y-6 mt-4">
-                  <Link
-                    to={`/blogs/detail/${createSlug(item.title)}/${
-                      item.id_article
-                    }`}
-                    className="space-y-4"
-                  >
+                  <Link to={`/blogs/${item.slug}`} className="space-y-4">
                     <div className="flex items-center justify-between md:justify-start gap-4">
                       <div className="flex items-center gap-2">
                         <div className="border p-1 rounded-full">
@@ -124,11 +112,10 @@ const ListBlogs: React.FC = () => {
                         <h2 className="lora text-xl font-semibold line-clamp-2 hover:underline">
                           {item.title}
                         </h2>
-                        <p className="line-clamp-2 text-sm mt-1">
-                          <div
-                            dangerouslySetInnerHTML={{ __html: item.content }}
-                          />
-                        </p>
+                        <div
+                          className="line-clamp-2 text-sm mt-1"
+                          dangerouslySetInnerHTML={{ __html: item.content }}
+                        />
                       </div>
                       <div className="w-4/12 flex justify-end">
                         <img
@@ -139,9 +126,8 @@ const ListBlogs: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
-                      <p className="text-sm">
-                        {item.categories?.name_categori}
-                      </p>
+                      <p className="text-sm">Share:</p>
+                      <ShareMedsos url={`/blogs/${item.slug}`} size="6" />
                     </div>
                   </Link>
                   <hr />
@@ -171,19 +157,14 @@ const ListBlogs: React.FC = () => {
               : blogsTrending?.slice(0, 10).map((item, i) => (
                   <li key={item.id_article} className="flex gap-3">
                     <span>{i + 1}. </span>
-                    <Link
-                      to={`/blogs/detail/${createSlug(item.title)}/${
-                        item.id_article
-                      }`}
-                    >
+                    <Link to={`/blogs/${item.slug}`}>
                       <p className="font-semibold hover:underline line-clamp-2 lora">
                         {item.title}
                       </p>
-                      <p className="text-sm line-clamp-2">
-                        <div
-                          dangerouslySetInnerHTML={{ __html: item.content }}
-                        />
-                      </p>
+                      <div
+                        className="text-sm line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: item.content }}
+                      />
                     </Link>
                   </li>
                 ))}

@@ -1,3 +1,4 @@
+import { MapPin } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -42,9 +43,18 @@ const Footer: React.FC = () => {
               Drabsky
             </h2>
             <p className="text-cdark md:mb-3 mb-1">
-              Jalan Sidodadi Gang A, Kelurahan Kedungwuni TImur, Kecamatan
-              Kedungwuni, Pekalongan 51173, Indonesia/Jawa Tengah
+              Marison Regency Bojong, Blok F, Wangandowo - Bojong, Kabupaten
+              Pekalongan, Jawa Tengah
             </p>
+            <Link
+              to="https://maps.app.goo.gl/HgSdvrhKC63ZnLxKA"
+              target="_blank"
+            >
+              <div className="w-max flex items-center gap-2 bg-cprimary rounded-full py-2 px-4 text-white">
+                <MapPin />
+                <p className="text-sm font-semibold">Get Location</p>
+              </div>
+            </Link>
           </div>
           <div className="md:w-2/12 w-full mt-4">
             <h2 className="text-md font-semibold md:mb-4 mb-2 text-cdark">
@@ -67,9 +77,11 @@ const Footer: React.FC = () => {
           </div>
           <div className="md:w-2/12 w-full mt-4">
             <h2 className="text-md font-semibold md:mb-4 mb-2 text-cdark">
-              Blog Terbaru
+              Support
             </h2>
-            <div className="flex flex-col text-sm capitalize"></div>
+            <div className="flex flex-col text-sm capitalize">
+              <Link to="https://www.drabsky.com#faq">FaQ</Link>
+            </div>
           </div>
           <div className="md:w-2/12 w-full mt-4">
             <h2 className="text-md font-semibold md:mb-4 mb-2 text-cdark">

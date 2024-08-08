@@ -280,8 +280,8 @@ const HeaderLight: React.FC<Props> = ({ isOpen }) => {
                   x2="25"
                   y2="1"
                   stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 />
                 <line
                   x1="1"
@@ -289,8 +289,8 @@ const HeaderLight: React.FC<Props> = ({ isOpen }) => {
                   x2="25"
                   y2="7"
                   stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 />
                 <line
                   x1="8"
@@ -298,8 +298,8 @@ const HeaderLight: React.FC<Props> = ({ isOpen }) => {
                   x2="25"
                   y2="13"
                   stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 />
               </svg>
             </button>
