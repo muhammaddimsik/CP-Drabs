@@ -186,7 +186,7 @@ const AddClient: React.FC = () => {
                   <FormItem>
                     <FormLabel>Nama Client</FormLabel>
                     <FormControl>
-                      <Input placeholder="ex. Web Development" {...field} />
+                      <Input placeholder="ex. PT IDMETAFORA" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -200,7 +200,7 @@ const AddClient: React.FC = () => {
                     <FormLabel>Deskripsi</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Masukan deskripsi dari service"
+                        placeholder="Masukan deskripsi dari klien"
                         {...field}
                       />
                     </FormControl>

@@ -183,7 +183,7 @@ const EditClient: React.FC<Props> = ({ client, getDataClient: refetch }) => {
                     <FormLabel>Deskripsi</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Masukan deskripsi dari service"
+                        placeholder="Masukan deskripsi dari klien"
                         {...field}
                       />
                     </FormControl>

@@ -55,7 +55,11 @@ const index: React.FC = () => {
       <div className="w-full">
         <HeaderLight isOpen={false} />
         <div className="container mx-auto">
-          <section className="pt-10 md:pb-20 pb-4">
+          <section
+            className="pt-10 md:pb-20 pb-4"
+            data-aos="fade-up"
+            data-aos-duration="1500"
+          >
             <div className="flex flex-col items-center">
               <p className="border rounded-full py-1 px-3 text-center text-xs text-white inline backdrop-blur-sm bg-gradient-to-r from-purple-500 to-pink-500">
                 Our Portfolio!🔥
@@ -94,6 +98,8 @@ const index: React.FC = () => {
                       className="p-2 md:p-4 w-full"
                       key={item.id_portofolio}
                       id={String(item.id_portofolio)}
+                      data-aos="fade-up"
+                      data-aos-duration="1500"
                     >
                       <div className="md:flex">
                         <div className="md:w-4/12 md:h-40">

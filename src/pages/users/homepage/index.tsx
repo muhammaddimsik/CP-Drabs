@@ -141,7 +141,11 @@ const index: React.FC = () => {
 
         <section className="mt-20 bg-gray-100 py-20">
           <div className="container mx-auto">
-            <div className="flex flex-col items-center">
+            <div
+              className="flex flex-col items-center"
+              data-aos="fade-up"
+              data-aos-duration="1500"
+            >
               <p className="rounded-full py-1 px-3 text-center text-sm text-white inline backdrop-blur-sm bg-gradient-to-r from-purple-500 to-pink-500">
                 Growth your business with us!🔥
               </p>
@@ -152,7 +156,11 @@ const index: React.FC = () => {
                 </h2>
               </div>
             </div>
-            <div className="md:w-1/2 mx-auto">
+            <div
+              className="md:w-1/2 mx-auto"
+              data-aos="fade-up"
+              data-aos-duration="1500"
+            >
               <p className="text-cdark text-center">
                 Kami menghadirkan layanan yang menggabungkan kreativitas dan
                 keahlian teknis untuk kemajuan bisnis Anda.
@@ -166,7 +174,12 @@ const index: React.FC = () => {
                     </div>
                   ))
                 : dataServices?.map((item) => (
-                    <div key={item.id_service} className="p-2 w-full md:w-4/12">
+                    <div
+                      key={item.id_service}
+                      className="p-2 w-full md:w-4/12"
+                      data-aos="fade-up"
+                      data-aos-duration="1500"
+                    >
                       <div className="bg-white rounded-lg p-6">
                         <div className="bg-cprimary/20 w-10 h-10 rounded-lg flex items-center justify-center">
                           <div
@@ -187,7 +200,11 @@ const index: React.FC = () => {
         </section>
 
         <section className="container mx-auto py-20">
-          <div className="flex flex-col items-center">
+          <div
+            className="flex flex-col items-center"
+            data-aos="fade-up"
+            data-aos-duration="1500"
+          >
             <p className="rounded-full py-1 px-3 text-center text-sm text-white inline backdrop-blur-sm bg-gradient-to-r from-purple-500 to-pink-500">
               Our Portfolio!🔥
             </p>
@@ -197,7 +214,11 @@ const index: React.FC = () => {
               </h2>
             </div>
           </div>
-          <div className="md:w-1/2 mx-auto">
+          <div
+            className="md:w-1/2 mx-auto"
+            data-aos="fade-up"
+            data-aos-duration="1500"
+          >
             <p className="text-cdark text-center">
               Lihat beberapa karya terbaik kami yang telah membantu klien
               mencapai tujuan bisnis mereka.
@@ -223,7 +244,11 @@ const index: React.FC = () => {
                     key={item.id_portofolio}
                     className="md:w-4/12 w-full space-y-4 p-2"
                   >
-                    <div className="bg-white rounded shadow-md">
+                    <div
+                      className="bg-white rounded shadow-md"
+                      data-aos="fade-up"
+                      data-aos-duration="1500"
+                    >
                       <div className="w-full">
                         <img
                           src={item.image}
@@ -259,7 +284,11 @@ const index: React.FC = () => {
 
         <section>
           <div className="container mx-auto my-20">
-            <div className="my-4 space-y-1 md:w-5/12 mx-auto">
+            <div
+              className="my-4 space-y-1 md:w-5/12 mx-auto"
+              data-aos="fade-up"
+              data-aos-duration="1500"
+            >
               <h2 className="text-cdark font-bold inter text-center md:text-5xl text-4xl">
                 Our Client & Mitra
               </h2>
@@ -276,6 +305,8 @@ const index: React.FC = () => {
                     <div
                       key={item.id_client}
                       className="hover:shadow-lg rounded-lg p-4 md:w-3/12 w-1/2 md:h-32 flex justify-center items-center"
+                      data-aos="flip-left"
+                      data-aos-duration="1500"
                     >
                       <img
                         src={item.image}
@@ -292,7 +323,11 @@ const index: React.FC = () => {
 
         <section className="py-20 bg-[#F8F8F8]">
           <div className="container mx-auto">
-            <div className="flex flex-col items-center">
+            <div
+              className="flex flex-col items-center"
+              data-aos="fade-up"
+              data-aos-duration="1500"
+            >
               <p className="border rounded-full py-1 px-3 text-center text-sm text-white inline backdrop-blur-sm bg-gradient-to-r from-purple-500 to-pink-500">
                 Our Blogs!🔥
               </p>
@@ -302,7 +337,11 @@ const index: React.FC = () => {
                 </h2>
               </div>
             </div>
-            <div className="md:w-1/2 mx-auto">
+            <div
+              className="md:w-1/2 mx-auto"
+              data-aos="fade-up"
+              data-aos-duration="1500"
+            >
               <p className="text-cdark text-center">
                 Wawasan dan Tips Terbaik untuk Mengikuti Perkembangan Teknologi
               </p>
@@ -327,7 +366,11 @@ const index: React.FC = () => {
                       key={item.id_article}
                       className="md:w-4/12 w-full space-y-4 p-2"
                     >
-                      <div className="bg-white rounded">
+                      <div
+                        className="bg-white rounded"
+                        data-aos="fade-up"
+                        data-aos-duration="1500"
+                      >
                         <div className="w-full">
                           <img
                             src={item.image}

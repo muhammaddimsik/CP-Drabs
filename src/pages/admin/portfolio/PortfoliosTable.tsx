@@ -88,13 +88,17 @@ export const columns = (refetch: () => void): ColumnDef<TPortfolio>[] => [
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize text-start">{row.getValue("title")}</div>
+      <div className="capitalize text-start line-clamp-2">
+        {row.getValue("title")}
+      </div>
     ),
   },
   {
     accessorKey: "description",
     header: "Descriptions",
-    cell: ({ row }) => <div>{row.getValue("description")}</div>,
+    cell: ({ row }) => (
+      <div className="line-clamp-2">{row.getValue("description")}</div>
+    ),
   },
   {
     id: "actions",

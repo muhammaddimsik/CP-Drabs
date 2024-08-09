@@ -91,7 +91,11 @@ const DetailBlog: React.FC = () => {
                 </h1>
                 <p>{detailBlog?.meta_description}</p>
               </div>
-              <div className="flex items-center justify-between gap-4">
+              <div
+                className="flex items-center justify-between gap-4"
+                data-aos="fade-up"
+                data-aos-duration="1500"
+              >
                 <div className="flex items-center gap-2">
                   <div className="border p-1 rounded-full">
                     <img src="/logo.png" alt="drabsky" width={40} height={40} />
@@ -101,7 +105,7 @@ const DetailBlog: React.FC = () => {
                 <p className="text-sm">{formatDate(detailBlog?.createdAt)}</p>
               </div>
               <hr />
-              <div className="pt-6">
+              <div className="pt-6" data-aos="fade-up" data-aos-duration="1500">
                 <img
                   src={detailBlog?.image}
                   alt={detailBlog?.title}
@@ -113,15 +117,15 @@ const DetailBlog: React.FC = () => {
                   <div
                     dangerouslySetInnerHTML={{ __html: detailBlog.content }}
                   />
-                  <div className="my-10 flex justify-between items-center">
+                  <div className="my-10 md:flex justify-between items-center">
                     <span className="py-2 px-6 bg-gray-100 rounded-full text-sm">
                       {detailBlog.categories?.name_categori}
                     </span>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-center md:mt-0 mt-4">
                       <p>Share to:</p>
                       <ShareMedsos
                         size="10"
-                        url={`/blogs/${detailBlog.slug}`}
+                        url={`https://www.drabsky.com/blogs/${detailBlog.slug}`}
                       />
                     </div>
                   </div>
@@ -154,7 +158,7 @@ const DetailBlog: React.FC = () => {
                       </div>
                     </div>
                   ))
-                : dataArticles?.slice(0, 5).map((item) => (
+                : dataArticles?.slice(0, 6).map((item) => (
                     <Link
                       to={`/blogs/${item.slug}`}
                       className="w-full md:w-1/2 md:p-4 py-4 md:py-4 space-y-4"

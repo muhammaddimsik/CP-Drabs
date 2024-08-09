@@ -63,7 +63,11 @@ const index: React.FC = () => {
         <HeaderLight isOpen={false} />
         <div className="w-full">
           <div className="container mx-auto">
-            <section className="pt-10 md:pb-20 pb-4">
+            <section
+              className="pt-10 md:pb-20 pb-4"
+              data-aos="fade-up"
+              data-aos-duration="1500"
+            >
               <div className="flex flex-col items-center">
                 <p className="border rounded-full py-1 px-3 text-center text-xs text-white inline backdrop-blur-sm bg-gradient-to-r from-purple-500 to-pink-500">
                   Who We Are!🔥
@@ -86,7 +90,7 @@ const index: React.FC = () => {
           </div>
         </div>
 
-        <section>
+        <section data-aos="fade-up" data-aos-duration="1500">
           <div className="container mx-auto py-12 px-6 md:px-0">
             <h2 className="md:text-4xl text-3xl font-semibold text-center">
               About Our Business
@@ -107,7 +111,7 @@ const index: React.FC = () => {
           </div>
         </section>
 
-        <section>
+        <section data-aos="fade-up" data-aos-duration="1500">
           <div className="container mx-auto py-6 md:py-12 px-6 md:px-0">
             <h2 className="md:text-4xl text-3xl font-semibold text-center">
               Why Choose Us?
@@ -132,7 +136,7 @@ const index: React.FC = () => {
           </div>
         </section>
 
-        <section>
+        <section data-aos="fade-up" data-aos-duration="1500">
           <div className="container mx-auto py-12 px-6 md:px-0">
             <div className="block md:flex gap-10">
               <h2 className="w-full md:w-5/12 text-3xl font-semibold mb-3">

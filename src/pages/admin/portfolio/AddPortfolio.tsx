@@ -37,7 +37,7 @@ const path = [
 ];
 
 const formSchema = z.object({
-  title: z.string().min(2).max(50, "Maksimal panjang nama adalah 50"),
+  title: z.string().min(2).max(255, "Maksimal panjang nama adalah 255"),
   description: z.string().min(10, "Deskripsi minimal terdiri dari 10 karakter"),
 });
 
@@ -165,7 +165,7 @@ const AddPortfolio: React.FC = () => {
                     >
                       <img
                         src={preveiw ? preveiw : ""}
-                        alt="prevew-wisata"
+                        alt="prevew-portfolio"
                         className="max-h-40"
                       />
                     </Label>
@@ -188,7 +188,7 @@ const AddPortfolio: React.FC = () => {
                   <FormItem>
                     <FormLabel>Nama Portfolio</FormLabel>
                     <FormControl>
-                      <Input placeholder="ex. Web Development" {...field} />
+                      <Input placeholder="Masukan nama portfolio" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -202,7 +202,7 @@ const AddPortfolio: React.FC = () => {
                     <FormLabel>Deskripsi</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Masukan deskripsi dari service"
+                        placeholder="Masukan deskripsi dari portfolio"
                         {...field}
                       />
                     </FormControl>

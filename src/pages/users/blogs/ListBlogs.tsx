@@ -68,10 +68,10 @@ const ListBlogs: React.FC = () => {
 
   return (
     <div className="md:flex justify-between">
-      <main className="md:w-8/12 w-full space-y-6">
+      <main className="md:w-8/12 w-full space-y-6 mt-4 md:mt-0">
         <p>Blog Terbaru</p>
         <hr />
-        <div className="md:pr-10 md:max-h-[500px] overflow-y-scroll no-scrollbar">
+        <div className="md:pr-10 md:max-h-[500px] md:overflow-y-scroll md:no-scrollbar">
           {isLoading
             ? [1, 2, 3, 4, 5].map((item) => (
                 <div className="space-y-4" key={item}>
@@ -127,7 +127,10 @@ const ListBlogs: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-4">
                       <p className="text-sm">Share:</p>
-                      <ShareMedsos url={`/blogs/${item.slug}`} size="6" />
+                      <ShareMedsos
+                        url={`https://www.drabsky.com/blogs/${item.slug}`}
+                        size="6"
+                      />
                     </div>
                   </Link>
                   <hr />
@@ -154,7 +157,7 @@ const ListBlogs: React.FC = () => {
                     </div>
                   </div>
                 ))
-              : blogsTrending?.slice(0, 10).map((item, i) => (
+              : blogsTrending?.slice(0, 5).map((item, i) => (
                   <li key={item.id_article} className="flex gap-3">
                     <span>{i + 1}. </span>
                     <Link to={`/blogs/${item.slug}`}>

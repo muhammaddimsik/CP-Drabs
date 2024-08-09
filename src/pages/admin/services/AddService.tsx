@@ -37,7 +37,7 @@ const path = [
 ];
 
 const formSchema = z.object({
-  title: z.string().min(2).max(50, "Maksimal panjang nama adalah 50"),
+  title: z.string().min(2).max(255, "Maksimal panjang nama adalah 255"),
   content: z.string().min(10, "Deskripsi minimal terdiri dari 10 karakter"),
   icon: z.string(),
 });
@@ -100,7 +100,7 @@ const AddService: React.FC = () => {
                   <FormItem>
                     <FormLabel>Nama Service</FormLabel>
                     <FormControl>
-                      <Input placeholder="ex. Web Development" {...field} />
+                      <Input placeholder="Masukan nama service" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -132,7 +132,7 @@ const AddService: React.FC = () => {
                       <Input placeholder="ex. <svg></svg>" {...field} />
                     </FormControl>
                     <FormDescription className="mt-1">
-                      Icon harus berbentuk svg
+                      Icon harus berbentuk tag svg
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

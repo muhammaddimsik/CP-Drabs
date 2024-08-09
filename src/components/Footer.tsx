@@ -7,12 +7,14 @@ const Footer: React.FC = () => {
     <section className="bg-white pt-20">
       <div className="container mx-auto">
         <div className="md:flex items-center justify-between">
-          <h2 className="inter font-bold text-3xl">Let's Stay Connected</h2>
+          <h2 className="inter font-bold md:text-3xl text-2xl">
+            Let's Stay Connected
+          </h2>
           <div className="mt-4 md:mt-0 flex gap-2 item-center md:justify-center">
             <a
               href="https://api.whatsapp.com/send/?phone=6285640943430&text=Halo Drabs! Saya ingin bertanya tentang pembuatan website.&type=phone_number&app_absent=0"
               target="_blank"
-              className="flex items-center gap-1 rounded py-3 px-6 bg-green-500 hover:bg-green-600"
+              className="flex items-center gap-1 rounded py-3 px-6 bg-green-400 hover:bg-green-500"
             >
               <svg
                 width="24"
@@ -80,7 +82,7 @@ const Footer: React.FC = () => {
               Support
             </h2>
             <div className="flex flex-col text-sm capitalize">
-              <Link to="https://www.drabsky.com#faq">FaQ</Link>
+              <Link to="/#faq">FaQ</Link>
             </div>
           </div>
           <div className="md:w-2/12 w-full mt-4">

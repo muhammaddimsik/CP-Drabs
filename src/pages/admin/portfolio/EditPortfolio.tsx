@@ -33,7 +33,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/stores/AuthStore";
 
 const formSchema = z.object({
-  title: z.string().min(2).max(50, "Maksimal panjang nama adalah 50"),
+  title: z.string().min(2).max(255, "Maksimal panjang nama adalah 255"),
   description: z.string().min(10, "Deskripsi minimal terdiri dari 10 karakter"),
 });
 
@@ -169,7 +169,7 @@ const EditPortfolio: React.FC<Props> = ({
                     <FormControl>
                       <Input
                         className="text-sm"
-                        placeholder="ex. PT IDMETAFORA"
+                        placeholder="Masukan nama portfolio"
                         {...field}
                       />
                     </FormControl>
@@ -185,7 +185,7 @@ const EditPortfolio: React.FC<Props> = ({
                     <FormLabel>Deskripsi</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Masukan deskripsi dari service"
+                        placeholder="Masukan deskripsi dari portfolio"
                         {...field}
                       />
                     </FormControl>

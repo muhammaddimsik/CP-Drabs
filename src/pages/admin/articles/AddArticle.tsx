@@ -37,6 +37,9 @@ import { TCategories } from "@/lib/models";
 
 import JoditEditor from "jodit-react";
 
+const MAX_FILE_SIZE_MB = 2;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
 const path = [
   {
     name: "Articles",
@@ -49,11 +52,13 @@ const path = [
 ];
 
 const formSchema = z.object({
-  title: z.string().min(2).max(500, "Maksimal panjang title adalah 500"),
+  title: z.string().min(2).max(255, "Maksimal panjang title adalah 255"),
   categori_id: z.string(),
   content: z.string().min(10, "Deskripsi minimal terdiri dari 10 karakter"),
-  meta_description: z.string(),
-  meta_keyword: z.string(),
+  meta_description: z
+    .string()
+    .max(255, "Maksimal panjang meta description adalah 255"),
+  meta_keyword: z.string().max(255, "Maksimal panjang meta keyword adalah 255"),
 });
 
 const AddArticle: React.FC = () => {
@@ -96,6 +101,14 @@ const AddArticle: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (fileToBig) {
+      return toast({
+        title: "Error",
+        description: "File gambar terlalu besar, maksimal 2MB",
+        variant: "destructive",
+      });
+    }
+
     setIsLoading(true);
     let imageUrl = "";
 
@@ -156,11 +169,24 @@ const AddArticle: React.FC = () => {
   const [preveiw, setPreview] = useState<string | null>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [fileToBig, setFileToBig] = useState(false);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
+
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        setFileToBig(true);
+        setImgToUpload(undefined);
+        setPreview(null);
+        return; // Hentikan proses lebih lanjut jika file terlalu besar
+      }
+
       setImgToUpload(file);
     }
+
+    setFileToBig(false);
+
     const file = e.target.files?.[0];
     if (file) {
       const previewUrl = URL.createObjectURL(file);
@@ -201,7 +227,7 @@ const AddArticle: React.FC = () => {
                     >
                       <img
                         src={preveiw ? preveiw : ""}
-                        alt="prevew-wisata"
+                        alt="prevew-article"
                         className="max-h-40"
                       />
                     </Label>
@@ -216,6 +242,9 @@ const AddArticle: React.FC = () => {
                     </div>
                   </div>
                 )}
+                <FormDescription className={`${fileToBig && "text-red-500"}`}>
+                  {fileToBig && "Kandani"} Maksimal ukuran file 2MB
+                </FormDescription>
               </div>
               <FormField
                 control={form.control}
@@ -278,7 +307,10 @@ const AddArticle: React.FC = () => {
                   <FormItem className="w-full">
                     <FormLabel>Meta Descriptions</FormLabel>
                     <FormControl>
-                      <Input placeholder="ex. 9123.123.12" {...field} />
+                      <Input
+                        placeholder="Masukan meta description"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -291,7 +323,7 @@ const AddArticle: React.FC = () => {
                   <FormItem className="w-full">
                     <FormLabel>Meta Keyword</FormLabel>
                     <FormControl>
-                      <Input placeholder="ex. 12873.12981.12" {...field} />
+                      <Input placeholder="Masukan meta keywords" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

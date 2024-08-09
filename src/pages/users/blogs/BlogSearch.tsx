@@ -34,14 +34,6 @@ const BlogSearch: React.FC = () => {
     getBlogSearch();
   }, [query]);
 
-  const createSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "") // Menghapus karakter khusus
-      .replace(/\s+/g, "-") // Mengganti spasi dengan tanda hubung
-      .replace(/-+/g, "-"); // Mengganti beberapa tanda hubung dengan satu
-  };
-
   return (
     <>
       <Seo
@@ -76,13 +68,13 @@ const BlogSearch: React.FC = () => {
               ))
             ) : dataBlogs && dataBlogs.length != 0 ? (
               dataBlogs.slice(0, 10).map((item) => (
-                <div key={item.id_article} className="space-y-6 mt-4">
-                  <Link
-                    to={`/blogs/detail/${createSlug(item.title)}/${
-                      item.id_article
-                    }`}
-                    className="space-y-4"
-                  >
+                <div
+                  key={item.id_article}
+                  className="space-y-6 mt-4"
+                  data-aos="fade-up"
+                  data-aos-duration="1500"
+                >
+                  <Link to={`/blogs/${item.slug}`} className="space-y-4">
                     <div className="flex items-center justify-between md:justify-start gap-4">
                       <div className="flex items-center gap-2">
                         <div className="border p-1 rounded-full">
@@ -102,11 +94,10 @@ const BlogSearch: React.FC = () => {
                         <h2 className="lora text-xl font-semibold line-clamp-2 hover:underline">
                           {item.title}
                         </h2>
-                        <p className="line-clamp-2 text-sm mt-1">
-                          <div
-                            dangerouslySetInnerHTML={{ __html: item.content }}
-                          />
-                        </p>
+                        <div
+                          className="line-clamp-2 text-sm mt-1"
+                          dangerouslySetInnerHTML={{ __html: item.content }}
+                        />
                       </div>
                       <div className="w-4/12 flex justify-end">
                         <img

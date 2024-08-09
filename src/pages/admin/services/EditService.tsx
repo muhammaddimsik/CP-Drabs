@@ -33,7 +33,7 @@ import { TServices } from "@/lib/models";
 import { useAuth } from "@/stores/AuthStore";
 
 const formSchema = z.object({
-  title: z.string().min(2).max(50, "Maksimal panjang nama adalah 50"),
+  title: z.string().min(2).max(255, "Maksimal panjang nama adalah 255"),
   content: z.string().min(10, "Deskripsi minimal terdiri dari 10 karakter"),
   icon: z.string(),
 });
@@ -114,7 +114,7 @@ const EditService: React.FC<Props> = ({
                     <FormControl>
                       <Input
                         className="text-sm"
-                        placeholder="ex. Web Development"
+                        placeholder="Masukan nama service"
                         {...field}
                       />
                     </FormControl>
@@ -148,7 +148,7 @@ const EditService: React.FC<Props> = ({
                       <Input placeholder="ex. <svg></svg>" {...field} />
                     </FormControl>
                     <FormDescription className="mt-1">
-                      Icon harus berbentuk svg
+                      Icon harus berbentuk tag svg
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

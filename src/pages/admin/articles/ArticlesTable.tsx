@@ -87,14 +87,16 @@ export const columns = (refetch: () => void): ColumnDef<TArticles>[] => [
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize text-start">{row.getValue("title")}</div>
+      <div className="capitalize text-start line-clamp-2">
+        {row.getValue("title")}
+      </div>
     ),
   },
   {
     accessorKey: "content",
     header: "Descriptions",
     cell: ({ row }) => (
-      <div className="h-10 overflow-hidden">
+      <div className="h-10 overflow-hidden line-clamp-2">
         <div dangerouslySetInnerHTML={{ __html: row.getValue("content") }} />
       </div>
     ),
@@ -129,22 +131,9 @@ export const columns = (refetch: () => void): ColumnDef<TArticles>[] => [
     header: "Preview",
     cell: ({ row }) => {
       const article = row.original;
-      const createSlug = (title: string) => {
-        return title
-          .toLowerCase()
-          .replace(/[^a-z0-9\s-]/g, "") // Menghapus karakter khusus
-          .replace(/\s+/g, "-") // Mengganti spasi dengan tanda hubung
-          .replace(/-+/g, "-"); // Mengganti beberapa tanda hubung dengan satu
-      };
       return (
         <div>
-          <Link
-            to={`/blogs/detail/${createSlug(article.title)}/${
-              article.id_article
-            }`}
-          >
-            Lihat
-          </Link>
+          <Link to={`/blogs/${article.slug}`}>Lihat</Link>
         </div>
       );
     },
