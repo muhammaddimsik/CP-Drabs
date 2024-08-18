@@ -72,70 +72,70 @@ const ListBlogs: React.FC = () => {
         <p>Blog Terbaru</p>
         <hr />
         <div className="md:pr-10 md:max-h-[500px] md:overflow-y-scroll md:no-scrollbar">
-          {isLoading
-            ? [1, 2, 3, 4, 5].map((item) => (
-                <div className="space-y-4" key={item}>
-                  <div className="flex gap-2">
-                    <div className="w-8/12 space-y-2">
-                      <Skeleton className="w-full h-10" />
-                      <Skeleton className="w-full h-6" />
-                      <Skeleton className="w-2/3 h-6" />
-                    </div>
-                    <div className="w-4/12 flex justify-end">
-                      <Skeleton className="w-full h-28" />
-                    </div>
-                  </div>
-                  <div className="">
-                    <Skeleton className="w-1/3 h-6" />
-                  </div>
-                </div>
-              ))
-            : dataBlogs?.map((item) => (
-                <div key={item.id_article} className="space-y-6 mt-4">
-                  <Link to={`/blogs/${item.slug}`} className="space-y-4">
-                    <div className="flex items-center justify-between md:justify-start gap-4">
-                      <div className="flex items-center gap-2">
-                        <div className="border p-1 rounded-full">
-                          <img
-                            src="/logo.png"
-                            alt="drabsky"
-                            width={25}
-                            height={25}
-                          />
-                        </div>
-                        <p className="text-sm">Drabs</p>
-                      </div>
-                      <p className="text-sm">{formatDate(item.createdAt)}</p>
-                    </div>
-                    <div className="flex gap-2">
-                      <div className="w-8/12">
-                        <h2 className="lora text-xl font-semibold line-clamp-2 hover:underline">
-                          {item.title}
-                        </h2>
-                        <div
-                          className="line-clamp-2 text-sm mt-1"
-                          dangerouslySetInnerHTML={{ __html: item.content }}
-                        />
-                      </div>
-                      <div className="w-4/12 flex justify-end">
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="md:h-28 md:w-40 w-20 h-16 object-cover"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <p className="text-sm">Share:</p>
-                      <ShareMedsos
-                        url={`https://www.drabsky.com/blogs/${item.slug}`}
-                        size="6"
+          {dataBlogs?.map((item) => (
+            <div key={item.id_article} className="space-y-6 mt-4">
+              <Link to={`/blogs/${item.slug}`} className="space-y-4">
+                <div className="flex items-center justify-between md:justify-start gap-4">
+                  <div className="flex items-center gap-2">
+                    <div className="border p-1 rounded-full">
+                      <img
+                        src="/logo.png"
+                        alt="drabsky"
+                        width={25}
+                        height={25}
                       />
                     </div>
-                  </Link>
-                  <hr />
+                    <p className="text-sm">Drabs</p>
+                  </div>
+                  <p className="text-sm">{formatDate(item.createdAt)}</p>
                 </div>
-              ))}
+                <div className="flex gap-2">
+                  <div className="w-8/12">
+                    <h2 className="lora text-xl font-semibold line-clamp-2 hover:underline">
+                      {item.title}
+                    </h2>
+                    <div
+                      className="line-clamp-2 text-sm mt-1"
+                      dangerouslySetInnerHTML={{ __html: item.content }}
+                    />
+                  </div>
+                  <div className="w-4/12 flex justify-end">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="md:h-28 md:w-40 w-20 h-16 object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <p className="text-sm">Share:</p>
+                  <ShareMedsos
+                    url={`https://www.drabsky.com/blogs/${item.slug}`}
+                    size="6"
+                  />
+                </div>
+              </Link>
+              <hr />
+            </div>
+          ))}
+          {isLoading &&
+            [1, 2, 3, 4, 5].map((item) => (
+              <div className="space-y-4" key={item}>
+                <div className="flex gap-2">
+                  <div className="w-8/12 space-y-2">
+                    <Skeleton className="w-full h-10" />
+                    <Skeleton className="w-full h-6" />
+                    <Skeleton className="w-2/3 h-6" />
+                  </div>
+                  <div className="w-4/12 flex justify-end">
+                    <Skeleton className="w-full h-28" />
+                  </div>
+                </div>
+                <div className="">
+                  <Skeleton className="w-1/3 h-6" />
+                </div>
+              </div>
+            ))}
         </div>
       </main>
       <aside className="md:block hidden w-4/12 border-l pl-10">

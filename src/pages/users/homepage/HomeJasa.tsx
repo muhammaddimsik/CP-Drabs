@@ -5,11 +5,11 @@ import Footer from "@/components/Footer";
 import Seo from "@/components/Seo";
 import { TArticles, TClients, TPortfolio, TServices } from "@/lib/models";
 import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import HeaderLight from "@/components/HeaderLight";
 
-const index: React.FC = () => {
+const HomeJasa: React.FC = () => {
   const [dataServices, setDataServices] = useState<TServices[]>();
   const [isLoadingServices, setIsLoadingServices] = useState<boolean>(false);
 
@@ -96,11 +96,13 @@ const index: React.FC = () => {
     }
   }, []);
 
+  const params = useParams();
+
   return (
     <>
       <Seo
-        title="PT Drab Sky Technology"
-        description="Software House - Jasa Pembuatan Website dan Aplikasi Android Pekalongan"
+        title={`Jasa Pembuatan Aplikasi dan Website ${params.id}`}
+        description={`PT Drab Sky Technology hadir sebagai perusahaan yang menyediakan layanan pembuatan aplikasi dan website di ${params.id}`}
         type="website"
         name="Drabsky"
         image="/logo.png"
@@ -117,8 +119,8 @@ const index: React.FC = () => {
                   Growth your business with us!🔥
                 </p>
                 <h1 className="text-cdark md:text-5xl text-4xl inter font-bold text-center md:text-start">
-                  Transformasi Bisnis Dengan{" "}
-                  <span className="text-cprimary">Inovasi Teknologi</span>
+                  Jasa Pembuatan Aplikasi dan Website
+                  <span className="text-cprimary capitalize"> {params.id}</span>
                 </h1>
                 <div className="md:flex gap-2 text-center md:text-start">
                   <p className="text-cdark">Web Development</p>
@@ -416,4 +418,4 @@ const index: React.FC = () => {
   );
 };
 
-export default index;
+export default HomeJasa;

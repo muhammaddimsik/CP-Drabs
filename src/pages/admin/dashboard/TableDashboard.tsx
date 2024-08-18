@@ -43,11 +43,10 @@ const TableDashboard: React.FC<Props> = ({ dataArticles, dataPortfolio }) => {
                     <p className="line-clamp-2">{article.title}</p>
                   </TableCell>
                   <TableCell className="text-sm">
-                    <p className="line-clamp-2">
-                      <div
-                        dangerouslySetInnerHTML={{ __html: article.content }}
-                      />
-                    </p>
+                    <div
+                      className="line-clamp-2"
+                      dangerouslySetInnerHTML={{ __html: article.content }}
+                    />
                   </TableCell>
                   <TableCell className="text-sm">
                     {article.view_count}

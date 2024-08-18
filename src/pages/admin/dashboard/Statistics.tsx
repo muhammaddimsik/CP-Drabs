@@ -1,7 +1,14 @@
 import { axiosInstance } from "@/lib/axios";
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Camera, ChevronRight, Layers3, TentTree, UserCog } from "lucide-react";
+import {
+  ChevronRight,
+  GalleryVerticalEnd,
+  HandHelping,
+  Layers3,
+  NotepadText,
+  User,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import TableDashboard from "./TableDashboard";
 import {
@@ -18,9 +25,8 @@ const Statistics: React.FC = () => {
   const getDataArticles = async () => {
     setIsLoadingArticles(true);
     try {
-      const response = await axiosInstance.get("article");
+      const response = await axiosInstance.get("article?limit=9999&offset=0");
       setDataArticles(response.data.data);
-      // console.log(response.data.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -115,7 +121,7 @@ const Statistics: React.FC = () => {
                 <>
                   <div className="w-4/12 flex justify-center items-center">
                     <div className="bg-orange-50 rounded p-3">
-                      <Camera className="h-5 w-5 text-fuchsia-500" />
+                      <NotepadText className="h-5 w-5 text-fuchsia-500" />
                     </div>
                   </div>
                   <div className="w-8/12">
@@ -160,7 +166,7 @@ const Statistics: React.FC = () => {
                 <>
                   <div className="w-4/12 flex justify-center items-center">
                     <div className="bg-orange-50 rounded p-3">
-                      <TentTree className="h-5 w-5 text-orange-500" />
+                      <HandHelping className="h-5 w-5 text-orange-500" />
                     </div>
                   </div>
                   <div className="w-8/12">
@@ -250,7 +256,7 @@ const Statistics: React.FC = () => {
                 <>
                   <div className="w-4/12 flex justify-center items-center">
                     <div className="bg-yellow-50 rounded p-3">
-                      <UserCog className="h-5 w-5 text-yellow-500" />
+                      <User className="h-5 w-5 text-yellow-500" />
                     </div>
                   </div>
                   <div className="w-8/12">
@@ -294,8 +300,8 @@ const Statistics: React.FC = () => {
               ) : (
                 <>
                   <div className="w-4/12 flex justify-center items-center">
-                    <div className="bg-yellow-50 rounded p-3">
-                      <UserCog className="h-5 w-5 text-yellow-500" />
+                    <div className="bg-green-50 rounded p-3">
+                      <GalleryVerticalEnd className="h-5 w-5 text-green-500" />
                     </div>
                   </div>
                   <div className="w-8/12">
@@ -307,7 +313,7 @@ const Statistics: React.FC = () => {
                         <Skeleton className="w-[60px] h-[30px] rounded-lg" />
                       ) : (
                         <p className="font-bold text-slate-800 text-2xl">
-                          {dataClients?.length}
+                          {dataPortfolio?.length}
                         </p>
                       )}
                       <Link

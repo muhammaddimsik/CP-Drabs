@@ -36,6 +36,7 @@ import { TArticles, TCategories } from "@/lib/models";
 // import Editor from "@/components/rich-text/editor";
 
 import JoditEditor from "jodit-react";
+import { Textarea } from "@/components/ui/textarea";
 
 const MAX_FILE_SIZE_MB = 2;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
@@ -361,11 +362,12 @@ const EditArticle: React.FC = () => {
                       <FormItem className="w-full">
                         <FormLabel>Meta Descriptions</FormLabel>
                         <FormControl>
-                          <Input
+                          <Textarea
                             placeholder="Masukan meta descriptions"
                             {...field}
                           />
                         </FormControl>
+
                         <FormMessage />
                       </FormItem>
                     )}
@@ -377,7 +379,7 @@ const EditArticle: React.FC = () => {
                       <FormItem className="w-full">
                         <FormLabel>Meta Keyword</FormLabel>
                         <FormControl>
-                          <Input
+                          <Textarea
                             placeholder="Masukan meta keyword"
                             {...field}
                           />

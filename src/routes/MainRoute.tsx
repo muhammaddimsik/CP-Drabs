@@ -22,6 +22,8 @@ import PortfolioUser from "@/pages/users/portfolio/index";
 import EditArticle from "@/pages/admin/articles/EditArticle";
 import ScrollToTop from "@/lib/scrollToTop";
 import BlogSearch from "@/pages/users/blogs/BlogSearch";
+import HomeJasa from "@/pages/users/homepage/HomeJasa";
+import HomePemerintah from "@/pages/users/homepage/HomePemerintah";
 
 const MainRoute: React.FC = () => {
   return (
@@ -30,6 +32,14 @@ const MainRoute: React.FC = () => {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route
+          path="/jasa-pembuatan-aplikasi-dan-website/:id"
+          element={<HomeJasa />}
+        />
+        <Route
+          path="/jasa-pembuatan-website-pemerintah/:id"
+          element={<HomePemerintah />}
+        />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/search" element={<BlogSearch />} />
