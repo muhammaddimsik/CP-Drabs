@@ -372,11 +372,19 @@ const index: React.FC = () => {
                         data-aos-duration="1500"
                       >
                         <div className="w-full">
-                          <img
-                            src={item.image}
-                            alt={item.title}
-                            className="w-full md:h-56 object-cover rounded"
-                          />
+                          {item.image === "" ? (
+                            <img
+                              src="/no-picture.png"
+                              alt={item.title}
+                              className="w-full md:h-56 object-contain rounded p-10"
+                            />
+                          ) : (
+                            <img
+                              src={item.image}
+                              alt={item.title}
+                              className="w-full md:h-56 object-cover rounded"
+                            />
+                          )}
                         </div>
                         <div className="py-4 px-6">
                           <p className="font-semibold line-clamp-2">

@@ -100,11 +100,19 @@ const ListBlogs: React.FC = () => {
                     />
                   </div>
                   <div className="w-4/12 flex justify-end">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="md:h-28 md:w-40 w-20 h-16 object-cover"
-                    />
+                    {item.image === "" ? (
+                      <img
+                        src="/no-picture.png"
+                        alt={item.title}
+                        className="md:h-28 md:w-40 w-20 h-16 object-contain"
+                      />
+                    ) : (
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="md:h-28 md:w-40 w-20 h-16 object-cover"
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center gap-4">

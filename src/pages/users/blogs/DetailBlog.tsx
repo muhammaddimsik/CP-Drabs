@@ -106,11 +106,13 @@ const DetailBlog: React.FC = () => {
               </div>
               <hr />
               <div className="pt-6" data-aos="fade-up" data-aos-duration="1500">
-                <img
-                  src={detailBlog?.image}
-                  alt={detailBlog?.title}
-                  className="w-full rounded-xl"
-                />
+                {detailBlog.image && (
+                  <img
+                    src={detailBlog?.image}
+                    alt={detailBlog?.title}
+                    className="w-full rounded-xl"
+                  />
+                )}
               </div>
               {detailBlog && (
                 <div className="leading-relaxed">
@@ -164,11 +166,19 @@ const DetailBlog: React.FC = () => {
                       className="w-full md:w-1/2 md:p-4 py-4 md:py-4 space-y-4"
                       key={item.id_article}
                     >
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-48 object-cover rounded-md"
-                      />
+                      {item.image === "" ? (
+                        <img
+                          src="/no-picture.png"
+                          alt={item.title}
+                          className="w-full h-48 object-contain rounded-md p-4"
+                        />
+                      ) : (
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-48 object-cover rounded-md"
+                        />
+                      )}
                       <div className="space-y-2">
                         <div className="flex gap-2 items-center">
                           <div className="border p-1 rounded-full">
