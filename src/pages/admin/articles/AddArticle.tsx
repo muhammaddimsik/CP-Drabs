@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 import { axiosInstance } from "@/lib/axios";
 import { useAuth } from "@/stores/AuthStore";
 import { Label } from "@/components/ui/label";
-import { Loader, Trash2 } from "lucide-react";
+import { Loader, StickyNote, Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import AddCategory from "@/components/AddCategory";
@@ -204,6 +204,76 @@ const AddArticle: React.FC = () => {
 
   const editor = useRef(null);
 
+  const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [linkFile, setLinkFile] = useState<string[]>([]);
+  const [fileUpload, setFileUpload] = useState<File>();
+  const [fileBesar, setFileBesar] = useState(false);
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        setFileBesar(true);
+        setPreview(null);
+        return; // Hentikan proses lebih lanjut jika file terlalu besar
+      }
+
+      setFileUpload(file);
+    }
+
+    setFileBesar(false);
+  };
+
+  const uploadFile = async () => {
+    setIsLoadingFile(true);
+    try {
+      const response = await axiosInstance.post(
+        "files",
+        {
+          file: fileUpload,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      setLinkFile((prevState) => {
+        return [...(prevState || []), response.data.url];
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoadingFile(false);
+    }
+  };
+
+  useEffect(() => {
+    if (fileUpload && fileBesar == false) {
+      uploadFile();
+    }
+  }, [fileUpload]);
+
+  const handleCopy = (text: string) => {
+    try {
+      navigator.clipboard.writeText(text);
+      toast({
+        title: "Success",
+        description: "Link berhasil dicopy",
+        variant: "success",
+      });
+    } catch (error) {
+      toast({
+        title: "Success",
+        description: "Link gagal dicopy",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Layout path={path} title="Add Article">
       <Form {...form}>
@@ -247,6 +317,47 @@ const AddArticle: React.FC = () => {
                   {fileToBig && "Kandani"} Maksimal ukuran file 2MB
                 </FormDescription>
               </div>
+              <div className="">
+                <Label htmlFor="file">File</Label>
+                {linkFile &&
+                  linkFile.map((item) => (
+                    <div
+                      className="flex items-center gap-2"
+                      onClick={() => handleCopy(item)}
+                    >
+                      <p
+                        key={item}
+                        className="text-sm break-words text-blue-500"
+                      >
+                        {item}
+                      </p>
+                      <div className="flex items-center gap-1 cursor-pointer">
+                        <StickyNote className="w-6 text-green-500" />
+                        <p className="text-xs text-green-500">copy link</p>
+                      </div>
+                    </div>
+                  ))}
+                {isLoadingFile ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  <>
+                    <Input
+                      id="file"
+                      type="file"
+                      onChange={(e) => handleFile(e)}
+                      accept="file"
+                      ref={fileInputRef}
+                      className="mt-1"
+                    />
+
+                    <FormDescription
+                      className={`${fileBesar && "text-red-500"}`}
+                    >
+                      {fileBesar && "Woyy!! Kandani"} Maksimal ukuran file 2MB
+                    </FormDescription>
+                  </>
+                )}
+              </div>
               <FormField
                 control={form.control}
                 name="title"
@@ -263,6 +374,8 @@ const AddArticle: React.FC = () => {
                   </FormItem>
                 )}
               />
+            </div>
+            <div className="w-1/2 space-y-4">
               <FormField
                 control={form.control}
                 name="categori_id"
@@ -299,8 +412,6 @@ const AddArticle: React.FC = () => {
                   </FormItem>
                 )}
               />
-            </div>
-            <div className="w-1/2 space-y-4">
               <FormField
                 control={form.control}
                 name="meta_description"

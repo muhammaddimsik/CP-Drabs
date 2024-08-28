@@ -160,7 +160,10 @@ const HeaderLight: React.FC<Props> = ({ isOpen }) => {
                   />
                 </svg>
               </Link>
-              <Link to="https://www.linkedin.com/drab.sky/" target="_balnk">
+              <Link
+                to="https://www.linkedin.com/in/drab-sky-43a59b276/"
+                target="_balnk"
+              >
                 <svg
                   width="20"
                   height="20"
