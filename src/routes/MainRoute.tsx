@@ -24,6 +24,7 @@ import ScrollToTop from "@/lib/scrollToTop";
 import BlogSearch from "@/pages/users/blogs/BlogSearch";
 import HomeJasa from "@/pages/users/homepage/HomeJasa";
 import HomePemerintah from "@/pages/users/homepage/HomePemerintah";
+import WeddingInvitationPage from "@/pages/users/wedding/WeddingInvitationPage";
 
 const MainRoute: React.FC = () => {
   return (
@@ -32,6 +33,7 @@ const MainRoute: React.FC = () => {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/undangan" element={<WeddingInvitationPage />} />
         <Route
           path="/jasa-pembuatan-aplikasi-dan-website/:id"
           element={<HomeJasa />}
