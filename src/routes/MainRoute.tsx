@@ -25,6 +25,7 @@ import BlogSearch from "@/pages/users/blogs/BlogSearch";
 import HomeJasa from "@/pages/users/homepage/HomeJasa";
 import HomePemerintah from "@/pages/users/homepage/HomePemerintah";
 import WeddingInvitationPage from "@/pages/users/wedding/WeddingInvitationPage";
+import JawaWeddingInvitationPage from "@/pages/users/wedding/JawaWeddingInvitationPage";
 
 const MainRoute: React.FC = () => {
   return (
@@ -34,6 +35,7 @@ const MainRoute: React.FC = () => {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/undangan" element={<WeddingInvitationPage />} />
+        <Route path="/wedding/zidna-didik" element={<JawaWeddingInvitationPage />} />
         <Route
           path="/jasa-pembuatan-aplikasi-dan-website/:id"
           element={<HomeJasa />}

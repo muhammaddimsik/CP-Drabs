@@ -17,6 +17,10 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, "index.html"),
         wedding: path.resolve(__dirname, "undangan/index.html"),
+         weddingJawa: path.resolve(
+          __dirname,
+          "undangan/jawa/index.html",
+        ),
       },
     },
   },
